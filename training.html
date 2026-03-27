@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>前線安全戰技 | 事故安全官資源網</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        canvas#embers-training {
+            position: fixed;
+            inset: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+    </style>
+    <style>
+        .module-section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .module-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 4rem 3rem;
+            margin-bottom: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .module-card.reverse { flex-direction: row-reverse; }
+        
+        @media (max-width: 900px) {
+            .module-card, .module-card.reverse { flex-direction: column; padding: 2rem; }
+        }
+
+        .module-text { flex: 1; z-index: 2; }
+        
+        .module-visual {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 350px;
+        }
+
+        .smoke-anim {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(148, 163, 184, 0.4) 0%, transparent 60%);
+            border-radius: 50%;
+            animation: smoke 4s infinite alternate ease-in-out;
+            position: relative;
+        }
+
+        .smoke-anim::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, transparent 50%);
+            border-radius: 50%;
+            animation: pulse-fire 2s infinite alternate;
+        }
+
+        @keyframes smoke {
+            0% { transform: scale(1) translateY(0); filter: blur(10px); }
+            100% { transform: scale(1.5) translateY(-50px) rotate(10deg); filter: blur(20px); opacity: 0.5; }
+        }
+
+        @keyframes pulse-fire {
+            0% { transform: translate(-50%, -50%) scale(0.8); }
+            100% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            background: rgba(14, 165, 233, 0.15);
+            color: #38bdf8;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            font-weight: 600;
+        }
+
+        /* ====== REHAB 軌道旋轉系統 ====== */
+        .rehab-circle {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid rgba(56, 189, 248, 0.15);
+            position: relative;
+            /* 移除整盤旋轉，改由節點各自公轉 */
+        }
+        /* 軌道光暈裝飾圈 */
+        .rehab-circle::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            border: 1px dashed rgba(56, 189, 248, 0.1);
+        }
+
+        .rehab-item {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--bg-card);
+            border: 2px solid var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+            /* 以圓心為錨點公轉：先移到圓邊，然後旋轉 */
+            top: 50%;
+            left: 50%;
+            margin: -40px 0 0 -40px; /* 圓心對齊：自身 -50% */
+            transform-origin: 50% 50%;
+            animation: orbit-cw 12s linear infinite;
+        }
+
+        /* 反向旋轉讓文字永遠直立 */
+        .rehab-item span {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-size: 0.85rem;
+            line-height: 1.2;
+            text-align: center;
+            animation: counter-orbit-cw 12s linear infinite;
+        }
+
+        /* 四個節點各錯 90deg，形成上/右/下/左初始位置 */
+        .rehab-item:nth-of-type(1) { animation-delay:   0s; }   /* 從頂部出發：Rest    */
+        .rehab-item:nth-of-type(2) { animation-delay:  -3s; }   /* 從右側出發：Energy  */
+        .rehab-item:nth-of-type(3) { animation-delay:  -6s; }   /* 從底部出發：Hydration */
+        .rehab-item:nth-of-type(4) { animation-delay:  -9s; }   /* 從左側出發：Accomm  */
+        .rehab-item span:nth-of-type(1) { animation-delay:   0s; }
+        .rehab-item:nth-of-type(2) span { animation-delay:  -3s; }
+        .rehab-item:nth-of-type(3) span { animation-delay:  -6s; }
+        .rehab-item:nth-of-type(4) span { animation-delay:  -9s; }
+
+        /* 軌道公轉：沿半徑 150px 的圓繞中心順時針 */
+        @keyframes orbit-cw {
+            from { transform: rotate(0deg)   translate(0, -150px) rotate(0deg);   }
+            to   { transform: rotate(360deg) translate(0, -150px) rotate(-360deg); }
+        }
+        /* 文字反向，抵消公轉旋轉 */
+        @keyframes counter-orbit-cw {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        .rehab-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: 800;
+            color: #38bdf8;
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .rehab-item:nth-of-type(2) { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.3); }
+        .rehab-item:nth-of-type(3) { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6,182,212,0.3); }
+        .rehab-item:nth-of-type(4) { border-color: #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+
+        @media (max-width: 600px) {
+            .rehab-circle { width: 220px; height: 220px; }
+            .rehab-item { width: 65px; height: 65px; font-size: 0.8rem; margin: -32.5px 0 0 -32.5px; }
+            @keyframes orbit-cw {
+                from { transform: rotate(0deg)   translate(0, -110px) rotate(0deg);   }
+                to   { transform: rotate(360deg) translate(0, -110px) rotate(-360deg); }
+            }
+            .rehab-center { font-size: 1.2rem; }
+        }
+
+        /* REHAB Icons */
+        .rehab-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('images/rehab_icons.png');
+            background-size: 200%;
+            border-radius: 50%;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .rehab-item:hover::before {
+            opacity: 1;
+        }
+
+        /* Icon positions in 2x2 grid */
+        .rehab-item:nth-of-type(1)::before { background-position: 0% 0%; }     /* Rest */
+        .rehab-item:nth-of-type(2)::before { background-position: 100% 0%; }   /* Energy */
+        .rehab-item:nth-of-type(3)::before { background-position: 0% 100%; }   /* Hydration */
+        .rehab-item:nth-of-type(4)::before { background-position: 100% 100%; } /* Accomm */
+
+        .rehab-item span {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+
+        .rehab-item:nth-of-type(2) { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245,158,11,0.3); }
+        .rehab-item:nth-of-type(3) { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6,182,212,0.3); }
+        .rehab-item:nth-of-type(4) { border-color: #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+    </style>
+</head>
+<body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.88), rgba(15, 23, 42, 0.95)), url('images/bg_training.png') no-repeat center center fixed; background-size: cover;">
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🔥</span>
+                <span class="text">安全戰技</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">前線安全戰技</a></li>
+                <li><a href="rights.html">消防三權與職安</a></li>
+                <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <canvas id="embers-training"></canvas>
+
+    <main class="container" style="padding-top: 8rem;">
+        <h1 class="split-title reveal-text text-center" style="margin-bottom: 4rem;">現場安全官四大核心戰技</h1>
+        
+        <div class="module-section">
+            
+            <!-- 戰技 1：火煙判讀 -->
+            <div class="module-card reveal-up" style="flex-direction: column; align-items: stretch; padding: 3rem;" data-tilt data-tilt-max="4" data-tilt-glare="false">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 4rem; flex-wrap: wrap;">
+                    <div class="module-text" style="flex: 1; min-width: 300px;">
+                        <h2 style="color: #ea580c; font-size: 2rem; margin-bottom: 1rem;">1. 火煙動態判讀 (VVDC Matrix)</h2>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">
+                            觀察火源初期的徵兆，解析煙霧的「體(Volume)、流(Velocity)、密(Density)、色(Color)」。點擊下方情境，觀察煙霧變化並閱讀分析結果。
+                        </p>
+                        
+                        <div class="vvdc-scenarios" style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+                            <button class="vvdc-btn" onclick="setSmoke('black', 'fast', '濃密的黑色快速煙霧')">濃厚、黑色、流動快速</button>
+                            <button class="vvdc-btn" onclick="setSmoke('grey', 'fast', '高速噴射的灰白煙')">稀疏、高速的灰白煙</button>
+                            <button class="vvdc-btn" onclick="setSmoke('white', 'slow', '多開口散發的緩慢白煙')">來自多個開口的緩慢白煙</button>
+                            <button class="vvdc-btn" onclick="setSmoke('brown', 'slow', '棕黃色悶燒煙霧')">縫隙竄出的棕黃色煙</button>
+                        </div>
+                    </div>
+                    <div class="module-visual" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 300px;">
+                        <div class="smoke-anim" id="interactive-smoke"></div>
+                        <div class="vvdc-result" id="vvdc-result" style="margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; min-height: 100px; text-align: center; color: var(--accent-blue-light);">
+                            請點擊左側情境來進行判讀...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 戰技 2：建築物與平面圖判讀 (梯開危險空間軟) -->
+            <div class="module-card reverse reveal-up delay-1">
+                <div class="module-text">
+                    <h2 style="color: #38bdf8; font-size: 2rem; margin-bottom: 1rem;">2. 平面圖與建築空間判讀</h2>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">
+                        在進入複雜結構前，安全官必須熟記平面圖判讀箴言：<strong>「梯開危險空間軟」</strong>。點擊下方口訣字卡顯示實務要領。
+                    </p>
+                    <div class="hex-grid" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem;">
+                        <div class="tag interactive hex-tag" onclick="showHex('出入口、樓梯。掌握主要的進出動線與逃生梯位置，確保不會被火勢截斷。')">階梯 (梯)</div>
+                        <div class="tag interactive hex-tag" onclick="showHex('開口（窗口等供人員進出或排煙的部位），必要時評估是否需破壞製造新開口。')">開口 (開)</div>
+                        <div class="tag interactive hex-tag" onclick="showHex('危害物品的位置。工廠平面圖(H-Card)標示的化學品與爆裂物存放區。')">危險 (危)</div>
+                        <div class="tag interactive hex-tag" onclick="showHex('空間死角。夾層、貨梯、單一入口無窗房...等極易造成人員迷失殉職的高風險空間。')">空間 (空)</div>
+                        <div class="tag interactive hex-tag" onclick="showHex('軟網方案。出水環境降溫、確認進/出口及雙方向救援方案、架梯子做兩手撤退準備。')">軟/逃 (軟)</div>
+                    </div>
+                    
+                    <div id="hex-result" style="margin-top: 1.5rem; padding: 1.2rem; background: rgba(56,189,248,0.1); border-left: 4px solid #38bdf8; border-radius: 0 8px 8px 0; color: white; display: none;">
+                        <!-- JS renders content -->
+                    </div>
+                </div>
+                <!-- 視覺化平面圖與結構崩塌模擬 -->
+                <div class="module-visual" style="flex-direction: column; gap: 1.5rem; align-items: center;">
+                    <img src="images/tactical_floorplan_hud.png" alt="HUD 數位戰術平面圖" style="width: 100%; max-width: 320px; border-radius: 12px; border: 1px solid #38bdf8; box-shadow: 0 0 30px rgba(56,189,248,0.2), inset 0 0 20px rgba(0, 255, 255, 0.1);">
+                    <div class="tag interactive" data-modal="modal-crack" style="border-color: #64748b; color:#cbd5e1; font-size: 0.95rem;">⚠️ 結構崩塌徵兆 (點擊檢視)</div>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes crack { 50% { transform: rotate(15deg) scaleX(1); } 100% { transform: rotate(15deg) scaleX(1) translateY(5px); opacity: 0; } }
+                .vvdc-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: var(--text-secondary); padding: 1rem; border-radius: 10px; cursor: pointer; transition: all 0.2s; text-align: left; font-size: 1.05rem; }
+                .vvdc-btn:hover { background: rgba(234,88,12,0.1); border-color: #ea580c; color: white; transform: translateX(5px); }
+                .smoke-anim.black { background: radial-gradient(circle, rgba(15,23,42,0.9) 0%, transparent 60%); animation-duration: 1.5s; }
+                .smoke-anim.white { background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, transparent 60%); animation-duration: 5s; }
+                .smoke-anim.grey { background: radial-gradient(circle, rgba(100,116,139,0.7) 0%, transparent 60%); animation-duration: 2s; }
+                .smoke-anim.brown { background: radial-gradient(circle, rgba(161,98,7,0.8) 0%, transparent 60%); animation-duration: 4s; }
+                .smoke-anim.fast { animation-name: smoke-fast; }
+                .smoke-anim.slow { animation-name: smoke; }
+                
+                @keyframes smoke-fast {
+                    0% { transform: scale(1) translateY(0); filter: blur(5px); }
+                    100% { transform: scale(2) translateY(-80px) rotate(20deg); filter: blur(15px); opacity: 0.3; }
+                }
+            </style>
+
+            <!-- 戰技 3：MAYDAY 應變 -->
+            <div class="module-card reveal-up delay-2">
+                <div class="module-text">
+                    <h2 style="color: #ef4444; font-size: 2rem; margin-bottom: 1rem;">3. MAYDAY 應變與轉型</h2>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">
+                        當發生消防人員受困事件 (MAYDAY)，事故安全官必須瞬間轉型，擔任或輔助緊急救援小組 (RIT) 指揮官，建立 360 度偵測並部署後勤資源。
+                    </p>
+                    <div class="tag-list">
+                        <div class="tag interactive" data-modal="modal-rit" style="color: #fca5a5; border-color: #ef4444; background: rgba(239,68,68,0.1);">RIT (緊急救援小組)</div>
+                        <div class="tag interactive" data-modal="modal-lunar" style="color: #fca5a5; border-color: #ef4444; background: rgba(239,68,68,0.1);">L.U.N.A.R 回報標準</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 戰技 4：REHAB 後勤照護 -->
+            <div class="module-card reverse reveal-up delay-3">
+                <div class="module-text">
+                    <h2 style="color: #10b981; font-size: 2rem; margin-bottom: 1rem;">4. 後勤照護區管制 (REHAB)</h2>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">
+                        為預防第一線人員過勞 (Overexertion)，必須落實人員去留管制 (Accountability)，進入休息區時必須達成恢復體力的四大要素。
+                    </p>
+                </div>
+                <div class="module-visual" style="height: 400px;">
+                    <div class="rehab-circle">
+                        <div class="rehab-center">REHAB</div>
+                        <div class="rehab-item" data-rehab="rest" title="點擊查看詳情"><span>Rest<br>(休息)</span></div>
+                        <div class="rehab-item" data-rehab="energy" title="點擊查看詳情"><span>Energy<br>(營養)</span></div>
+                        <div class="rehab-item" data-rehab="hydration" title="點擊查看詳情"><span>Hydration<br>(補水)</span></div>
+                        <div class="rehab-item" data-rehab="accomm" title="點擊查看詳情"><span>Accomm.<br>(適候)</span></div>
+                    </div>
+                    <p style="text-align:center; color: var(--text-secondary); font-size:0.9rem; margin-top:1rem;">👆 點擊各節點查看詳細內容</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+
+    <!-- Modals -->
+    <div class="modal-container" id="modal-volume">
+        <div class="modal-header">
+            <h3>體積 (Volume)</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>觀察火場初期的煙霧體積，能判斷內部可燃物的多寡以及燃燒的規模。若體積瞬間劇增，可能代表火勢已突破原有限制空間，需要警覺閃燃風險。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-velocity">
+        <div class="modal-header">
+            <h3>速度 (Velocity)</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>煙霧竄出的速度反映了內部的壓力和溫度。速度極快且具有湍流（亂流）特徵的黑煙，是閃燃（Flashover）即將發生的強烈前兆。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-density">
+        <div class="modal-header">
+            <h3>密度與顏色 (Density & Color)</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>煙霧越濃密代表未完全燃燒的氣體越多，隨時可能被引燃；顏色（如黃褐色、深黑色）則能協助判斷燃燒物質，例如毒性化學物或高分子塑料產生的劇毒黑煙。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-crack">
+        <div class="modal-header">
+            <h3>屋頂凹陷/外牆龜裂徵兆</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>這是建築物主結構受高溫破壞、即將失去承載力的視覺警告。當觀察到此現象時，安全官須立即行使中止權，下令所有內部人員撤出。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-load">
+        <div class="modal-header">
+            <h3>重型機具或廣告看板負載風險</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>頂樓若有水塔、基地台或外牆有重型廣告看板，底層結構一旦受損極易發生「貫穿性坍塌」。安全官需提前劃定更大的危險熱區 (Hot Zone)。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-rit">
+        <div class="modal-header">
+            <h3>RIT (緊急救援小組)</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <img src="images/rit_tactical.png" alt="RIT 戰鬥裝備小組" style="width:100%; max-height: 220px; object-fit: cover; border-radius:8px; margin-bottom: 1.5rem; border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 0 15px rgba(239,68,68,0.2);">
+            <p>Rapid Intervention Team。這支隊伍不參與一般滅火，而是滿載專門救援裝備，在場外隨時待命，唯一目標就是在那最關鍵的時刻衝進火場，把受困的弟兄救出來。</p>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-lunar">
+        <div class="modal-header">
+            <h3>L.U.N.A.R 回報標準</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <img src="images/lunar_hud.png" alt="LUNAR 無線電回報標準 HUD" style="width:100%; max-height: 220px; object-fit: cover; border-radius:8px; margin-bottom: 1.5rem; border: 1px solid rgba(56,189,248,0.3); box-shadow: 0 0 15px rgba(56,189,248,0.2);">
+            <p>發生 MAYDAY 時的國際標準求救回報格式：<br><br>
+            <strong>L</strong> - Location (受困位置)<br>
+            <strong>U</strong> - Unit (隸屬單位/車組)<br>
+            <strong>N</strong> - Name (姓名)<br>
+            <strong>A</strong> - Assignment (原定任務與空氣量)<br>
+            <strong>R</strong> - Resources needed (救援所需資源/受困狀況)</p>
+        </div>
+    </div>
+
+    <!-- REHAB Modals -->
+    <div class="modal-container" id="modal-rehab-rest">
+        <div class="modal-header" style="border-left: 5px solid #38bdf8;">
+            <h3>💤 R &mdash; Rest（休息）</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;">
+                <div style="font-size:6rem; text-align:center; flex-shrink:0; line-height:1;">💤</div>
+                <div style="flex:1;">
+                    <h4 style="color:#38bdf8; font-size:1.4rem; margin-bottom:1rem;">充分休息，拒絕英雄主義</h4>
+                    <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:1.5rem;">消防員專屬設備重、熱區作業強度之大，彈性創傷風險極高。<strong style="color:white;">REHAB 的核心就是「科學性休息」</strong>，不能讓眼前的救災積極性而奉犧牲相互保護的長遠制度能力。</p>
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                        <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:1rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">⏱️</div>
+                            <strong style="color:white;">最少休息時間</strong>
+                            <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.3rem;">一般建議 10-20 分鐘以上，具體時間依現場漫導官判斷。</p>
+                        </div>
+                        <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:1rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">🚫</div>
+                            <strong style="color:white;">明令禁止</strong>
+                            <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.3rem;">未建立小組或未得重淨許可，任何人不得自行引退返回熱區。</p>
+                        </div>
+                        <div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:1rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">🩺</div>
+                            <strong style="color:white;">基本生命體徵檢測</strong>
+                            <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.3rem;">心跳 60 秒內須回復到 100 下、心率測量完成後才可小組重建。</p>
+                        </div>
+                        <div style="background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:1rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">☠️</div>
+                            <strong style="color:#ef4444;">斷絕休息的代價</strong>
+                            <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.3rem;">熱衰竭、促為心背腈發作，後東彭山影響報告證實。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-rehab-energy">
+        <div class="modal-header" style="border-left: 5px solid #f59e0b;">
+            <h3>⚡ E &mdash; Energy（營養補充）</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;">
+                <div style="font-size:6rem; text-align:center; flex-shrink:0; line-height:1;">🍌</div>
+                <div style="flex:1;">
+                    <h4 style="color:#f59e0b; font-size:1.4rem; margin-bottom:1rem;">補充營養，維持血糖穩定</h4>
+                    <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:1.5rem;">救災現場高強度作業消耗大量熱量，血糖下降導致決策能力降低、反應遲鈍。REHAB 區內需主動補充營養，不要等到下一次出動後才處理。</p>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
+                        <tr style="background:rgba(245,158,11,0.2);">
+                            <th style="padding:0.8rem; text-align:left; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.3);">食物類型</th>
+                            <th style="padding:0.8rem; text-align:left; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.3);">效果</th>
+                            <th style="padding:0.8rem; text-align:left; color:#f59e0b; border-bottom:1px solid rgba(245,158,11,0.3);">建議時機</th>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:0.8rem; color:white;">🍌 香蕉 / 能量棒</td>
+                            <td style="padding:0.8rem; color:var(--text-secondary);">快速補充鉀離子與糖分</td>
+                            <td style="padding:0.8rem; color:var(--text-secondary);">進入 REHAB 即可</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                            <td style="padding:0.8rem; color:white;">🥜 堅果 / 能量點心</td>
+                            <td style="padding:0.8rem; color:var(--text-secondary);">持續性補充熱量與脂肪</td>
+                            <td style="padding:0.8rem; color:var(--text-secondary);">熱區撤退後 10 分鐘內</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:0.8rem; color:var(--text-secondary);">☕ 咖啡 / 含糖飲料</td>
+                            <td style="padding:0.8rem; color:#ef4444;">利尿加劇脫水 ⚠️</td>
+                            <td style="padding:0.8rem; color:#ef4444;">建議避免</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-rehab-hydration">
+        <div class="modal-header" style="border-left: 5px solid #06b6d4;">
+            <h3>💧 H &mdash; Hydration（補水）</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;">
+                <div style="font-size:6rem; text-align:center; flex-shrink:0; line-height:1;">💧</div>
+                <div style="flex:1;">
+                    <h4 style="color:#06b6d4; font-size:1.4rem; margin-bottom:1rem;">水分 ≠ 只是解渴</h4>
+                    <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:1.5rem;">穿戴全展防護裝備投入緊急搜救，每小時流汗高達 1-2 公升。臉色蒼白、疲勞感與尿液顏色加深，已是脫水不足的警訊。</p>
+                    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+                        <div style="flex:1; min-width:180px; background:rgba(6,182,212,0.1); border:2px solid rgba(6,182,212,0.4); padding:1.5rem; border-radius:10px; text-align:center;">
+                            <div style="font-size:2.5rem; margin-bottom:0.5rem;">🚰</div>
+                            <strong style="color:white; display:block; margin-bottom:0.3rem;">清水 / 運動飲料</strong>
+                            <span style="color:#06b6d4;">✅ 優先選擇</span>
+                        </div>
+                        <div style="flex:1; min-width:180px; background:rgba(239,68,68,0.1); border:2px solid rgba(239,68,68,0.4); padding:1.5rem; border-radius:10px; text-align:center;">
+                            <div style="font-size:2.5rem; margin-bottom:0.5rem;">☕</div>
+                            <strong style="color:white; display:block; margin-bottom:0.3rem;">咖啡 / 酒精 / 高糖飲料</strong>
+                            <span style="color:#ef4444;">🚫 應將避免</span>
+                        </div>
+                    </div>
+                    <div style="background:rgba(6,182,212,0.1); border-left:4px solid #06b6d4; padding:1rem; border-radius:0 8px 8px 0;">
+                        <strong style="color:white;">📊 經驗法則</strong>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.5rem;">前往熱區前，預先補充 500mL 清水；每隔 15 分鐘主動補水 200~300mL；高溫作業所得需可高到 1.5L/hr。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container" id="modal-rehab-accomm">
+        <div class="modal-header" style="border-left: 5px solid #10b981;">
+            <h3>🌡️ A &mdash; Accommodation（適候）</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:2rem; flex-wrap:wrap; align-items:flex-start;">
+                <div style="font-size:6rem; text-align:center; flex-shrink:0; line-height:1;">🌡️</div>
+                <div style="flex:1;">
+                    <h4 style="color:#10b981; font-size:1.4rem; margin-bottom:1rem;">溫度管控是 REHAB 的隱形關卡</h4>
+                    <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:1.5rem;">適候 (Accommodation) 指的是保持身體在最佳熱調節起動的中性環境。熱中止（熱衰竭、熱痙攣、中暑）與碰冷（失溫）都會大幅降低救災效能與安全性。</p>
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <div style="flex:1; min-width:200px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:1.2rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">🔵 熱天降溫</div>
+                            <strong style="color:white; display:block;">Active Cooling</strong>
+                            <ul style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.5rem; padding-left:1.2rem;">
+                                <li>冰毛巾／冰袋敷頸部、腋下、手腕</li>
+                                <li>電風扇、冷氣帳篷 / 車內冷氣散熱</li>
+                                <li>冷水噴霧輻射皮膚</li>
+                            </ul>
+                        </div>
+                        <div style="flex:1; min-width:200px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); padding:1.2rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">🔴 冷天保暖</div>
+                            <strong style="color:white; display:block;">Cold Days Protocol</strong>
+                            <ul style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.5rem; padding-left:1.2rem;">
+                                <li>脫去濕透衣物，換上保溫層或防風衣</li>
+                                <li>飲用熱飲料緩慢補充體溫</li>
+                                <li>就地休息時以毛毯／防潮墊隔開地面</li>
+                            </ul>
+                        </div>
+                        <div style="flex:1; min-width:200px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); padding:1.2rem; border-radius:8px;">
+                            <div style="font-size:2rem; margin-bottom:0.5rem;">⚠️ 熱危警示</div>
+                            <strong style="color:#ef4444; display:block;">體溫超標立即評估</strong>
+                            <ul style="color:var(--text-secondary); font-size:0.9rem; margin-top:0.5rem; padding-left:1.2rem;">
+                                <li>體溫 &gt; 38.5°C 立刻送醫療評估</li>
+                                <li>心率 &gt; 120bpm 禁止重返熱區</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // VVDC Interactive Logic
+        function setSmoke(colorClass, speedClass, resultText) {
+            const smokeElem = document.getElementById('interactive-smoke');
+            const resultBox = document.getElementById('vvdc-result');
+            
+            // Reset classes
+            smokeElem.className = 'smoke-anim';
+            
+            // Apply new classes (force reflow to restart animation)
+            void smokeElem.offsetWidth; 
+            smokeElem.classList.add(colorClass);
+            smokeElem.classList.add(speedClass);
+            
+            // Dynamic Image Logic
+            const imgSrc = `images/vvdc_${colorClass}_${speedClass}.png`;
+            const imgHTML = `<img src="${imgSrc}" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.2);">`;
+
+            // Text & Image Injection
+            resultBox.innerHTML = `${imgHTML}<strong>研判結果：</strong><br><br>${resultText}`;
+            resultBox.style.color = '#fff';
+            
+            if(colorClass === 'black' && speedClass === 'fast') {
+                resultBox.innerHTML += '<br><br><span style="color:#ef4444; font-weight:bold;">⚠️閃燃前兆！立即撤出！</span>';
+                resultBox.style.borderColor = '#ef4444';
+                resultBox.style.background = 'rgba(239, 68, 68, 0.2)';
+            } else if (colorClass === 'brown') {
+                resultBox.innerHTML += '<br><br><span style="color:#f59e0b;">木造結構/裝潢建材悶燒中，留意結構破壞。</span>';
+                resultBox.style.borderColor = '#f59e0b';
+                resultBox.style.background = 'rgba(245, 158, 11, 0.2)';
+            } else {
+                resultBox.style.borderColor = 'rgba(255,255,255,0.1)';
+                resultBox.style.background = 'rgba(0,0,0,0.4)';
+            }
+        }
+
+        // Hex Floor Plan Logic
+        function showHex(text) {
+            const resultBox = document.getElementById('hex-result');
+            resultBox.style.display = 'block';
+            resultBox.innerHTML = `<strong>建築判讀實務：</strong><br>${text}`;
+            
+            // Simple pop animation
+            resultBox.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                resultBox.style.transform = 'scale(1)';
+                resultBox.style.transition = 'transform 0.2s';
+            }, 50);
+        }
+
+        // REHAB Modal Logic
+        const rehabMap = {
+            'rest':      'modal-rehab-rest',
+            'energy':    'modal-rehab-energy',
+            'hydration': 'modal-rehab-hydration',
+            'accomm':    'modal-rehab-accomm'
+        };
+        document.querySelectorAll('[data-rehab]').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                const key = el.dataset.rehab;
+                const modalId = rehabMap[key];
+                if (!modalId) return;
+                document.getElementById(modalId).classList.add('active');
+                document.getElementById('modal-overlay').classList.add('active');
+
+                // 【優化 3】點擊時暫停所有 REHAB 小圈的公轉動畫
+                document.querySelectorAll('.rehab-item, .rehab-item span').forEach(item => {
+                    item.style.animationPlayState = 'paused';
+                });
+            });
+        });
+
+        // Close REHAB modals via overlay or close button
+        document.getElementById('modal-overlay').addEventListener('click', closeAllModals);
+        document.querySelectorAll('#modal-rehab-rest .modal-close, #modal-rehab-energy .modal-close, #modal-rehab-hydration .modal-close, #modal-rehab-accomm .modal-close').forEach(btn => {
+            btn.addEventListener('click', closeAllModals);
+        });
+        function closeAllModals() {
+            document.querySelectorAll('.modal-container').forEach(m => m.classList.remove('active'));
+            document.getElementById('modal-overlay').classList.remove('active');
+            // 恢復 REHAB 動畫
+            document.querySelectorAll('.rehab-item, .rehab-item span').forEach(item => {
+                item.style.animationPlayState = 'running';
+            });
+        }
+    </script>
+    <script src="js/effects.js"></script>
+    <script>
+        initEmbers('embers-training');
+    </script>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線安全戰技</a></li>
+                        <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">本頁索引</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="#">📌 VVDC 火煙判讀矩陣</a></li>
+                        <li><a href="#">📌 梯開危險空間軟口訣</a></li>
+                        <li><a href="#">📌 MAYDAY / RIT 應變</a></li>
+                        <li><a href="#">📌 REHAB 後勤照護四要素</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v15 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+

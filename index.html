@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>全方位事故安全官防救災資源網</title>
+    <meta name="description" content="全方位事故安全官數位學習資源與法規專區。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Portal Specific Styles */
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        .portal-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, var(--hover-color), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .portal-card:hover::before {
+            opacity: 0.15;
+        }
+
+        .portal-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .portal-card:hover .portal-icon {
+            transform: scale(1.1) translateY(-5px);
+        }
+
+        .portal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portal-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 2rem;
+        }
+
+        .portal-btn {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.2);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portal-card:hover .portal-btn {
+            background: var(--btn-color);
+            border-color: var(--btn-color);
+        }
+
+        .hero-portal {
+            min-height: 65vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 6rem;
+            padding-bottom: 2rem;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(2, 6, 23, 1)), url('images/fire_safety_hud.png') no-repeat center center / cover;
+        }
+
+        /* 打字機光標 */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background: #38bdf8;
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: cursor-blink 0.8s step-end infinite;
+        }
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* HUD Corners */
+        .portal-card::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--btn-color);
+            border-bottom: 2px solid var(--btn-color);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .portal-card:hover::after {
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+        }
+
+        .portal-card .card-corners {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .portal-card .card-corners::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            border-left: 2px solid var(--btn-color);
+            border-top: 2px solid var(--btn-color);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .portal-card:hover .card-corners::before {
+            width: 40px;
+            height: 40px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="dark-bg">
+    <!-- 系統初始化引導視窗 (符合瀏覽器音訊規範) -->
+    <div id="welcome-overlay" class="welcome-overlay">
+        <div class="welcome-content">
+            <h2 class="welcome-title">數位指揮中心系統</h2>
+            <p class="welcome-subtitle">事故安全官資源網正在進行系統載入...<br>請點擊下方按鈕以初始化沈浸式影音模組</p>
+            <button id="start-system-btn" class="start-btn">初始化系統</button>
+            <div class="system-status">
+                [SYSTEM]: Loading Tactical Data... OK<br>
+                [AUDIO]: The_High_Pass.mp3... READY
+            </div>
+        </div>
+    </div>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🛡️</span>
+                <span class="text">事故安全官入口網</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">首頁總覽</a></li>
+                <li><a href="training.html">前線安全戰技</a></li>
+                <li><a href="rights.html">消防三權與職安</a></li>
+                <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-portal">
+            <div class="hud-overlay"></div>
+            <h1 class="reveal-text"><span id="typewriter-text"></span><span class="typewriter-cursor"></span></h1>
+            <p class="subtitle reveal-fade delay-1">從前線戰技到事後調查，構築最堅固的安全防線</p>
+        </section>
+
+        <script>
+        // 打字機效果
+        const typewriterEl = document.getElementById('typewriter-text');
+        const lines = ['全方位事故安全官', '防救災數位資源網'];
+        let lineIndex = 0, charIndex = 0, isDeleting = false, pauseTimer = null;
+        function typeLoop() {
+            const current = lines[lineIndex];
+            if (!isDeleting) {
+                typewriterEl.textContent = current.substring(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === current.length) {
+                    if (lineIndex === lines.length - 1) {
+                        // 最後一行打完就停住，不再消除
+                        typewriterEl.innerHTML = lines[0] + '<br>' + lines[1];
+                        return;
+                    }
+                    pauseTimer = setTimeout(() => { isDeleting = true; typeLoop(); }, 900);
+                    return;
+                }
+            } else {
+                typewriterEl.textContent = current.substring(0, charIndex - 1);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    lineIndex++;
+                }
+            }
+            setTimeout(typeLoop, isDeleting ? 50 : 90);
+        }
+        setTimeout(typeLoop, 600);
+        </script>
+
+        <section class="portal-grid">
+            <!-- Portal 1 -->
+            <a href="training.html" class="portal-card reveal-up delay-1" style="--hover-color:#38bdf8; --btn-color:#0ea5e9;">
+                <div class="card-corners"></div>
+                <div class="portal-icon">🔥</div>
+                <h2 class="portal-title">現場安全官戰技</h2>
+                <p class="portal-desc">火煙/建築判讀、MAYDAY 應變策略、與救災後勤照護 (REHAB) 管制系統。</p>
+                <div class="portal-btn">進入實務訓練</div>
+            </a>
+
+            <!-- Portal 2 -->
+            <a href="rights.html" class="portal-card reveal-up delay-2" style="--hover-color:#f59e0b; --btn-color:#ea580c;">
+                <div class="card-corners"></div>
+                <div class="portal-icon">⚖️</div>
+                <h2 class="portal-title">消防三權與法規</h2>
+                <p class="portal-desc">資訊權、退避權、調查權解析，及 113年最新消防法職安專章、ISO45001介紹。</p>
+                <div class="portal-btn">閱讀法規專章</div>
+            </a>
+
+            <!-- Portal 3 -->
+            <a href="investigation.html" class="portal-card reveal-up delay-3" style="--hover-color:#10b981; --btn-color:#059669;">
+                <div class="card-corners"></div>
+                <div class="portal-icon">📋</div>
+                <h2 class="portal-title">災害事故調查會</h2>
+                <p class="portal-desc">調查委員會組成架構、中央與地方作業流程，與臺日重大案例系統分析借鏡。</p>
+                <div class="portal-btn">查閱調查報告</div>
+            </a>
+
+            <!-- Portal 4 -->
+            <a href="quiz.html" class="portal-card reveal-up delay-1" style="--hover-color:#a855f7; --btn-color:#9333ea;">
+                <div class="card-corners"></div>
+                <div class="portal-icon">🎮</div>
+                <h2 class="portal-title">情境模擬測驗</h2>
+                <p class="portal-desc">透過沉浸式的決策模擬系統，立即驗證您對消防三權與前線安全的實務判斷能力。</p>
+                <div class="portal-btn">啟動測驗</div>
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線安全戰技</a></li>
+                        <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">法規索引</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="rights.html#info-node">📌 消防法 21-1 資訊權</a></li>
+                        <li><a href="rights.html#withdraw-node">📌 消防法 20-1 退避權</a></li>
+                        <li><a href="investigation.html#committee">📌 消防法 27-1 調查權</a></li>
+                        <li><a href="training.html#rehab">📌 REHAB 後勤照護</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v15 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

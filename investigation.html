@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>災害事故調查工作與角色定位 - 事故安全官</title>
+    <meta name="description" content="探討災害事故安全官的工作與角色定位，強調系統性精進與未來預防，非單純究責。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero {
+            background-image: url('images/forensic_map.png');
+            background-size: cover;
+            background-position: center center;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(5,10,20,0.6) 0%, rgba(5,10,20,0.95) 100%);
+        }
+        canvas#embers-inv {
+            position: fixed;
+            inset: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        
+        /* 藍圖背景特效 */
+        .resource-card {
+            background-image: radial-gradient(circle at 2px 2px, rgba(56, 189, 248, 0.05) 1px, transparent 0);
+            background-size: 20px 20px;
+        }
+        
+        .glass-card, .resource-card, .timeline-content {
+            transform-style: preserve-3d;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="embers-inv"></canvas>
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🛡️</span>
+                <span class="text">災害事故安全官</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線安全戰技</a></li>
+                <li><a href="rights.html">消防三權與職安</a></li>
+                <li><a href="investigation.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">災害事故調查</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="reveal-text">災害事故調查工作<br><span class="highlight">與角色定位</span></h1>
+            <p class="subtitle reveal-fade">重在系統性精進與防範未來，而非單純究責。</p>
+            <div class="hero-cta reveal-fade delay-1">
+                <a href="#core-values" class="btn btn-primary">了解核心精神</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+        </div>
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 核心理念對比區塊 -->
+        <section id="core-values" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-fade">調查的核心本質</h2>
+                <p class="section-desc reveal-fade">災害事故調查性質是「行政調查」，核心目標為探求真相以促進改善，確保第一線防救災人員之安全。</p>
+                
+                <div class="comparison-grid">
+                    <div class="flip-card reveal-up">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front jud-bg">
+                                <h3>司法 / 究責式調查 <br> <small>(傳統思維)</small></h3>
+                                <div class="icon-large">⚖️</div>
+                                <p>以追究個人罪責為目的</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <ul>
+                                    <li>性質：強制調查 (具強制處分權)</li>
+                                    <li>目的：釐清起火原因與追究責任</li>
+                                    <li>結果：產生法律效果與處罰</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="vs-badge reveal-fade delay-1">VS</div>
+                
+                    <div class="flip-card reveal-up delay-2">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front admin-bg">
+                                <h3>災害事故原因調查 <br> <small>(系統思維)</small></h3>
+                                <div class="icon-large">🔍</div>
+                                <p>以探求真相與改善系統為目的</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <ul>
+                                    <li>性質：任意調查 (需關係人自願配合)</li>
+                                    <li>目的：釐清消防人員致死/重傷原因</li>
+                                    <li>效果：無強制處分權，提出改善建議</li>
+                                    <li>價值：提升防救災安全</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 現場事故安全官角色區塊 (新增) -->
+        <section id="safety-officer" class="section dark-bg">
+            <div class="container">
+                <div class="split-layout">
+                    <div class="split-text reveal-fade">
+                        <div class="badge-tag">前線守護者</div>
+                        <h2 class="split-title">現場事故安全官<br>(Safety Officer)</h2>
+                        <p class="split-desc">在每一次高風險的搶救行動中，事故安全官是確保第一線救災人員生命安全的最後一道防線。他們獨立於一般的搶救任務之外，專注於現場的宏觀安全管控。</p>
+                        
+                        <style>
+                            .interactive-list-item {
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                                padding: 1rem;
+                                border-radius: 12px;
+                                border: 1px solid transparent;
+                            }
+                            .interactive-list-item:hover {
+                                background: rgba(255,255,255,0.05);
+                                border-color: rgba(255,255,255,0.1);
+                                transform: translateX(5px);
+                            }
+                            .interactive-list-item.active {
+                                background: rgba(56,189,248,0.1);
+                                border-color: rgba(56,189,248,0.3);
+                            }
+                        </style>
+                        <ul class="feature-list">
+                            <li class="reveal-up delay-1 interactive-list-item active" onclick="updateSOVisual('risk', this)">
+                                <div class="icon-circle safety-bg">👁️</div>
+                                <div>
+                                    <h4>風險辨識與評估</h4>
+                                    <p>持續監控建築結構、火載量、閃燃前兆或毒化洩漏，即時發出警告。</p>
+                                </div>
+                            </li>
+                            <li class="reveal-up delay-2 interactive-list-item" onclick="updateSOVisual('stop', this)">
+                                <div class="icon-circle alert-bg">🛑</div>
+                                <div>
+                                    <h4>絕對中止權 (Emergency Stop)</h4>
+                                    <p>當判定現場存在「立即且無法挽回的危險」時，有權直接中止行動並下令撤離。</p>
+                                </div>
+                            </li>
+                            <li class="reveal-up delay-3 interactive-list-item" onclick="updateSOVisual('record', this)">
+                                <div class="icon-circle record-bg">📋</div>
+                                <div>
+                                    <h4>管制與科學紀錄</h4>
+                                    <p>管控人員入室時間、氣瓶餘量。此紀錄也是日後「事故調查委員會」進行系統改善的重要證據。</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="split-visual reveal-up delay-2">
+                        <div class="visual-card">
+                            <div class="visual-header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                                <span>安全官戰術監測系統 (點擊左側切換)</span>
+                            </div>
+                            <div class="visual-body" style="padding: 0; background: transparent;">
+                                <img id="so-visual-img" src="images/so_risk.png" alt="戰術監測" style="width: 100%; height: 320px; object-fit: cover; border-radius: 0 0 16px 16px; border-bottom: 4px solid #38bdf8; transition: opacity 0.3s ease; display: block;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 調查會組成區塊 -->
+        <section id="committee" class="section dark-bg">
+            <div class="container">
+                <h2 class="section-title reveal-fade">災害事故調查會組成</h2>
+                <p class="section-desc reveal-fade">確保調查的專業性與客觀性，由各界菁英組成，並保障基層與專業主導 — <strong style="color:#38bdf8;">點擊卡片查看詳細說明</strong></p>
+
+                <style>
+                    .committee-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+                    .committee-card {
+                        position: relative; cursor: pointer;
+                        background: rgba(255,255,255,0.03);
+                        border: 1px solid rgba(255,255,255,0.1);
+                        border-radius: 16px;
+                        padding: 2rem 1.5rem;
+                        text-align: center;
+                        transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1);
+                        overflow: hidden;
+                        min-height: 260px; /* 防止高度不足導致內容重疊 */
+                        box-sizing: border-box;
+                    }
+                    .committee-card::before {
+                        content: '';
+                        position: absolute; inset: 0;
+                        background: var(--card-grad, linear-gradient(135deg, rgba(56,189,248,0.05), transparent));
+                        opacity: 0; transition: opacity 0.35s;
+                        pointer-events: none;
+                        z-index: -1; /* 置於卡片內容之下，避免遮擋 */
+                    }
+                    .committee-card:hover, .committee-card.active {
+                        transform: translateY(-8px);
+                        border-color: var(--card-color, #38bdf8);
+                        box-shadow: 0 12px 40px var(--card-glow, rgba(56,189,248,0.3));
+                    }
+                    .committee-card:hover::before, .committee-card.active::before { opacity: 1; }
+                    .committee-card .c-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; transition: transform 0.35s; }
+                    .committee-card:hover .c-emoji, .committee-card.active .c-emoji { transform: scale(1.2) rotate(-5deg); }
+                    .committee-card h3 { color: white; font-size: 1.2rem; margin-bottom: 0.8rem; }
+                    .committee-card .c-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
+                    .committee-card .c-tag {
+                        display: inline-block; margin-top: 1rem;
+                        padding: 0.25rem 0.8rem; border-radius: 20px;
+                        font-size: 0.8rem; font-weight: 600;
+                        background: rgba(56,189,248,0.15);
+                        color: var(--card-color, #38bdf8);
+                        border: 1px solid var(--card-color, #38bdf8);
+                    }
+                    .committee-card .c-click-hint {
+                        position: absolute; bottom: 0.6rem; right: 0.7rem;
+                        font-size: 0.7rem; color: rgba(255,255,255,0.2);
+                        transition: color 0.3s;
+                    }
+                    .committee-card:hover .c-click-hint { color: rgba(255,255,255,0.5); }
+
+                    /* Detail Panel */
+                    #committee-detail {
+                        margin-top: 2rem;
+                        padding: 2rem 2.5rem;
+                        border-radius: 16px;
+                        border-left: 5px solid #38bdf8;
+                        background: rgba(15,23,42,0.8);
+                        backdrop-filter: blur(10px);
+                        display: none;
+                        animation: panelIn 0.4s ease forwards;
+                    }
+                    @keyframes panelIn {
+                        from { opacity: 0; transform: translateY(15px); }
+                        to   { opacity: 1; transform: translateY(0); }
+                    }
+                    #committee-detail h4 { font-size: 1.4rem; margin-bottom: 1rem; }
+                    #committee-detail .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+                    #committee-detail .detail-item {
+                        display: flex; align-items: flex-start; gap: 0.7rem;
+                        padding: 0.8rem; border-radius: 8px;
+                        background: rgba(255,255,255,0.04);
+                        border: 1px solid rgba(255,255,255,0.07);
+                    }
+                    #committee-detail .detail-item .d-icon { font-size: 1.5rem; flex-shrink: 0; }
+                    #committee-detail .detail-item .d-text { color: #cbd5e1; font-size: 0.9rem; line-height: 1.5; }
+                    @media (max-width: 640px) { #committee-detail .detail-grid { grid-template-columns: 1fr; } }
+                </style>
+
+                <div class="committee-grid">
+                    <div class="committee-card reveal-up" style="--card-color:#64748b; --card-grad:linear-gradient(135deg,rgba(100,116,139,0.1),transparent); --card-glow:rgba(100,116,139,0.25);"
+                         onclick="showCommitteeDetail('agency')">
+                        <span class="c-emoji">👥</span>
+                        <h3>機關代表</h3>
+                        <p class="c-desc">消防、營建、毒化物等相關機關。</p>
+                        <span class="c-tag">政府機關</span>
+                        <span class="c-click-hint">▼ 點擊展開</span>
+                    </div>
+
+                    <div class="committee-card reveal-up delay-1" style="--card-color:#38bdf8; --card-grad:linear-gradient(135deg,rgba(56,189,248,0.1),transparent); --card-glow:rgba(56,189,248,0.25);"
+                         onclick="showCommitteeDetail('expert')">
+                        <span class="c-emoji">🎓</span>
+                        <h3>專家學者</h3>
+                        <p class="c-desc">消防、刑事、鑑識、電力、建築、結構、法律等多領域專家。</p>
+                        <span class="c-tag" style="background:rgba(56,189,248,0.15); color:#38bdf8; border-color:#38bdf8;">專業主導</span>
+                        <span class="c-click-hint">▼ 點擊展開</span>
+                    </div>
+
+                    <div class="committee-card reveal-up delay-2" style="--card-color:#f59e0b; --card-grad:linear-gradient(135deg,rgba(245,158,11,0.1),transparent); --card-glow:rgba(245,158,11,0.25);"
+                         onclick="showCommitteeDetail('frontline')">
+                        <span class="c-emoji">🚒</span>
+                        <h3>基層消防團體</h3>
+                        <p class="c-desc">保障第一線人員發聲，與專家學者合計席次需過半數。</p>
+                        <span class="c-tag" style="background:rgba(245,158,11,0.15); color:#f59e0b; border-color:#f59e0b;">基層聲音</span>
+                        <span class="c-click-hint">▼ 點擊展開</span>
+                    </div>
+
+                    <div class="committee-card reveal-up delay-3" style="--card-color:#10b981; --card-grad:linear-gradient(135deg,rgba(16,185,129,0.1),transparent); --card-glow:rgba(16,185,129,0.25);"
+                         onclick="showCommitteeDetail('principles')">
+                        <span class="c-emoji">⚖️</span>
+                        <h3>核心原則</h3>
+                        <p class="c-desc">委員 13-17 人，任一性別不少於 1/3，共識決議。</p>
+                        <span class="c-tag" style="background:rgba(16,185,129,0.15); color:#10b981; border-color:#10b981;">制衡機制</span>
+                        <span class="c-click-hint">▼ 點擊展開</span>
+                    </div>
+                </div>
+
+                <!-- Detail Panel -->
+                <div id="committee-detail"></div>
+            </div>
+            <!-- 背景裝飾 -->
+            <div class="ambient-glow"></div>
+        </section>
+
+        <script>
+        const committeeData = {
+            agency: {
+                color: '#64748b',
+                emoji: '👥',
+                title: '機關代表：政府協調的橋梁',
+                items: [
+                    { icon: '🔥', text: '<strong>消防單位</strong>：各縣市消防局、消防署代表，提供第一手現場救災決策相關資訊。' },
+                    { icon: '🏗️', text: '<strong>營建單位</strong>：建築技術與結構安全主管機關，確保建物安全標準的認定具備法律效力。' },
+                    { icon: '☣️', text: '<strong>毒化物主管機關</strong>：在涉及化學品或危險物質之事故中，提供專業的危害辨識與後續管制建議。' },
+                    { icon: '🏛️', text: '<strong>跨機關協調</strong>：機關代表負責在調查委員會與各部會之間進行資料調閱、證據提交的行政溝通。' }
+                ]
+            },
+            expert: {
+                color: '#38bdf8',
+                emoji: '🎓',
+                title: '專家學者：科學調查的核心引擎',
+                items: [
+                    { icon: '🔬', text: '<strong>消防 / 火災科學</strong>：分析火勢蔓延路徑、燃燒動力學，還原事故現場的科學真相。' },
+                    { icon: '⚡', text: '<strong>電力 / 結構工程</strong>：判定電氣起火原因、輕鋼構建築崩塌原因，為責任認定提供技術依據。' },
+                    { icon: '🧬', text: '<strong>鑑識 / 刑事偵查</strong>：蒐集物證、化學殘留分析，確保調查結果具備法庭效力。' },
+                    { icon: '📜', text: '<strong>法律顧問</strong>：保障調查程序的合法性，並協助草擬改善建議的法規修正方向。' }
+                ]
+            },
+            frontline: {
+                color: '#f59e0b',
+                emoji: '🚒',
+                title: '基層消防團體：第一線的真實聲音',
+                items: [
+                    { icon: '🗣️', text: '<strong>席次保障</strong>：基層消防人員代表與專家學者合計席次，依法必須超過委員會半數，確保現場實務意見不被稀釋。' },
+                    { icon: '🪖', text: '<strong>工會與職業團體</strong>：由具代表性的消防工會或職業團體推薦，讓真正在現場出生入死的人能夠發言。' },
+                    { icon: '📣', text: '<strong>防止資訊不對稱</strong>：基層人員常掌握管理層未必知悉的現場操作慣例，其發言有助於揭露系統性缺陷。' },
+                    { icon: '🛡️', text: '<strong>保護舉報人</strong>：委員會的嚴格保密義務，讓基層成員能夠安全且如實地提供個人見聞與判斷。' }
+                ]
+            },
+            principles: {
+                color: '#10b981',
+                emoji: '⚖️',
+                title: '核心原則：確保公正的制度防護網',
+                items: [
+                    { icon: '🔢', text: '<strong>委員 13-17 人</strong>：法定人數範圍確保委員會的規模足以處理複雜技術議題，同時維持決策效率。' },
+                    { icon: '♀♂', text: '<strong>性別比例原則</strong>：任一性別不少於 1/3，打破傳統消防調查的性別侷限，引入多元觀點。' },
+                    { icon: '🔒', text: '<strong>嚴格保密義務</strong>：所有委員依法負有保密責任，確保受調查人員（尤其是倖存消防員）能安心如實陳述，而不必擔憂後續壓力。' },
+                    { icon: '🤝', text: '<strong>共識決議機制</strong>：調查結論以共識決議為原則，避免多數決壓過少數專業意見，讓每一個聲音都被認真對待。' }
+                ]
+            }
+        };
+
+        function showCommitteeDetail(type) {
+            const data = committeeData[type];
+            const panel = document.getElementById('committee-detail');
+
+            // Update active card
+            document.querySelectorAll('.committee-card').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            // Build HTML
+            const itemsHtml = data.items.map(item => `
+                <div class="detail-item">
+                    <span class="d-icon">${item.icon}</span>
+                    <span class="d-text">${item.text}</span>
+                </div>
+            `).join('');
+
+            panel.innerHTML = `
+                <h4 style="color: ${data.color};">${data.emoji} ${data.title}</h4>
+                <div class="detail-grid">${itemsHtml}</div>
+            `;
+            panel.style.borderLeftColor = data.color;
+            panel.style.display = 'block';
+            panel.style.animation = 'none';
+            panel.offsetHeight; // reflow
+            panel.style.animation = 'panelIn 0.4s ease forwards';
+
+            // Smooth scroll to panel
+            setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }
+        </script>
+
+        <!-- 啟動程序與流程時間軸 -->
+        <section id="process" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-fade">中央與地方調查權責流程</h2>
+                <p class="section-desc reveal-fade">明確劃分權責，偕同現場勘查與關係人訪談，尊重關係人身心狀況</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item reveal-fade">
+                        <div class="timeline-dot central-dot"></div>
+                        <div class="timeline-content central-card">
+                            <h3>中央災害事故調查會 (內政部)</h3>
+                            <p>負責消防署及所屬機構人員之事故調查，或掌握地方辦理進度。</p>
+                            <ul>
+                                <li>掌握地方辦局進度與時序</li>
+                                <li>決議事項提供地方辦理</li>
+                                <li>發布報告及查核備查</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal-fade">
+                        <div class="timeline-dot local-dot"></div>
+                        <div class="timeline-content local-card">
+                            <h3>地方災害事故調查會 (各縣市政府)</h3>
+                            <p>負責縣市消防局所屬人員之事故調查。</p>
+                            <ul>
+                                <li>工作小組彙整時序、影像紀錄</li>
+                                <li>偕同專家進行勘查與<b>關係人訪談</b></li>
+                                <li>撰寫初步與基本報告呈報中央</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item reveal-fade">
+                        <div class="timeline-dot focus-dot"></div>
+                        <div class="timeline-content warning-card">
+                            <h3>⚠️ 訪談作業守則</h3>
+                            <p>必須取得受訪談對象同意，考量並尊重其身心狀況，避免再度造成心理創傷 (二次傷害) 並維護關係人信任。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 法規與教材區塊 (新增) -->
+        <section id="regulations" class="section">
+            <div class="container">
+                <h2 class="section-title reveal-fade">專屬法規與培訓教材</h2>
+                <p class="section-desc reveal-fade">掌握最新法令架構與現場防護知識，作為安全官與調查委員的核心智庫。</p>
+
+                <div class="resource-grid">
+                    <!-- Resource 1 -->
+                    <div class="resource-card reveal-up">
+                        <div class="r-icon">⚖️</div>
+                        <h3 class="r-title">消防法第 27-1 條</h3>
+                        <p class="r-desc">明定災害事故調查會之任務、組成、委員資格及處理程序。核心精神在於釐清事故真相，並提出搶救勤務的改善建議。</p>
+                        <a href="https://law.moj.gov.tw/LawClass/LawSingle.aspx?pcode=D0120001&flno=27-1" class="r-link" target="_blank" rel="noopener">閱讀法源 <span>→</span></a>
+                    </div>
+
+                    <!-- Resource 2 -->
+                    <div class="resource-card orange-top reveal-up delay-1">
+                        <div class="r-icon">🛡️</div>
+                        <h3 class="r-title">113年消防法職安專章</h3>
+                        <p class="r-desc">於113年11月修訂完成，參照職業安全衛生法精神，強制要求各級主管機關為基層防救災人員提供安全衛生的執勤防護機制與裝備。</p>
+                        <a href="https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0120001" class="r-link" target="_blank" rel="noopener">查看新制 <span>→</span></a>
+                    </div>
+
+                    <!-- Resource 3 -->
+                    <div class="resource-card green-top reveal-up delay-2">
+                        <div class="r-icon">📖</div>
+                        <h3 class="r-title">消防人員救災安全手冊</h3>
+                        <p class="r-desc">作為現場事故安全官 (Safety Officer) 的核心作業規範標準，包含火場氣量管控、人員編組撤離、及高風險場域危害辨識。</p>
+                        <a href="https://www.nfa.gov.tw/pro/index.php?code=list&ids=172" class="r-link" target="_blank" rel="noopener">前往手冊專區 <span>→</span></a>
+                    </div>
+
+                    <!-- Resource 4 -->
+                    <div class="resource-card reveal-up delay-3">
+                        <div class="r-icon">💻</div>
+                        <h3 class="r-title">FDS 火災模擬與系統教材</h3>
+                        <p class="r-desc">引進日本道頓堀火災等分析模式，透過虛擬實境訓練 (VR) 及火災動態模擬 (FDS) 分析起火範圍及爆燃前兆。</p>
+                        <a href="#" class="r-link">教材資源庫 <span>→</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 案例借鏡 -->
+        <section id="case-study" class="section tab-section dark-bg">
+            <div class="container">
+                <h2 class="section-title reveal-fade">借鏡國際：系統性思維分析</h2>
+                <p class="section-desc reveal-fade">以日本大阪道頓堀火災事故及國內新店粗坑壩救援案為例</p>
+
+                <div class="tabs-container reveal-up">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-target="tab-japan">日本大阪火災案例</button>
+                        <button class="tab-btn" data-target="tab-taiwan">新店粗坑壩水域救援</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-japan">
+                        <div class="case-grid">
+                            <div class="case-info">
+                                <h3>日本調查的方向與重點</h3>
+                                <p>非究責式的系統分析，關注「發生什麼(What)」與「如何發生(How)」，絕不歸咎於個人判斷 (Who)。</p>
+                                <ul>
+                                    <li><strong>火災模擬 (FDS)：</strong> 分析延燒路徑與建築構造弱點</li>
+                                    <li><strong>三個複合因子：</strong> 陷入危機因素、無法脫困因素、救援耗時因素</li>
+                                    <li><strong>嚴謹查證：</strong> 證據等級精確劃分 (認定、推定、可能...)</li>
+                                    <li><strong>防止再發生：</strong> 推展「自救訓練」與建築管理強化</li>
+                                </ul>
+                            </div>
+                            <div class="case-image">
+                                <div class="badge">情境重建模擬</div>
+                                <div class="placeholder-img japan-bg"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-taiwan">
+                        <div class="case-grid">
+                            <div class="case-info">
+                                <h3>地方與中央後續強化措施</h3>
+                                <p>從水域救援事故中學習，啟動各項中長期精進計畫。</p>
+                                <ul>
+                                    <li><strong>盤點與演練：</strong> 30日內完成高風險水域盤點並進行救援演練</li>
+                                    <li><strong>訓練營：</strong> 中央與地方合辦「高風險場域救援整備訓練營」</li>
+                                    <li><strong>警示標示：</strong> 強化警示標示法令，會同水利/觀光單位強化管理</li>
+                                    <li><strong>持續追蹤：</strong> 中央調查會持續掌握地方辦理進度</li>
+                                </ul>
+                            </div>
+                            <div class="case-image">
+                                <div class="badge">檢討應變處置</div>
+                                <div class="placeholder-img taiwan-bg"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section section">
+            <div class="container text-center reveal-fade">
+                <h2 class="section-title">安全，是所有救災工作的根本</h2>
+                <p>災害事故調查目的不在追究個人罪責，</p>
+                <p>而是透過公正客觀的檢視，作為未來訓練、裝備與行動模式改善的墊腳石。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線安全戰技</a></li>
+                        <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">法規索引</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="rights.html">📌 消防法 21-1 資訊權</a></li>
+                        <li><a href="rights.html">📌 消防法 20-1 退避權</a></li>
+                        <li><a href="#core-values">📌 消防法 27-1 調查權</a></li>
+                        <li><a href="training.html">📌 REHAB 後勤照護</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v15 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/effects.js"></script>
+    <script>
+        initEmbers('embers-inv');
+    </script>
+    <script>
+        function updateSOVisual(type, element) {
+            // Update active styling
+            document.querySelectorAll('.interactive-list-item').forEach(li => li.classList.remove('active'));
+            if (element) {
+                element.classList.add('active');
+            }
+
+            const img = document.getElementById('so-visual-img');
+            img.style.opacity = '0'; // Fade out
+
+            setTimeout(() => {
+                if (type === 'risk') {
+                    img.src = 'images/so_risk.png';
+                    img.style.borderBottomColor = '#38bdf8';
+                } else if (type === 'stop') {
+                    img.src = 'images/so_stop.png';
+                    img.style.borderBottomColor = '#ef4444';
+                } else if (type === 'record') {
+                    img.src = 'images/so_record.png';
+                    img.style.borderBottomColor = '#facc15';
+                }
+                img.style.opacity = '1'; // Fade in
+            }, 300);
+        }
+    </script>
+</body>
+</html>

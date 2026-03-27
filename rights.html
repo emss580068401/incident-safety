@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>消防三權與職安 | 事故安全官資源網</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rights-enhanced.css">
+    <style>
+        .rights-banner {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(circle at 50% 100%, rgba(245, 158, 11, 0.15), transparent 70%);
+        }
+        
+        .three-rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .right-card {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 1), rgba(15, 23, 42, 1));
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .right-card::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 150px;
+            height: 150px;
+            background: var(--glow-color);
+            filter: blur(50px);
+            opacity: 0.2;
+            transition: all 0.5s ease;
+            border-radius: 50%;
+        }
+
+        .right-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--glow-color);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .right-card:hover::before {
+            opacity: 0.5;
+            transform: scale(1.5);
+        }
+
+        .right-card .icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            z-index: 1;
+        }
+
+        .right-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+            z-index: 1;
+        }
+        
+        .right-card p {
+            color: var(--text-secondary);
+            z-index: 1;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .law-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--glow-color);
+            letter-spacing: 1px;
+            z-index: 1;
+            margin-top: auto;
+        }
+
+        .occupational-safety {
+            margin-top: 6rem;
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 20px;
+            border: 1px solid var(--border-glass);
+            padding: 4rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .os-text { flex: 1; }
+        .os-text h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #38bdf8; }
+        .os-text p { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 2rem; }
+        
+        .os-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .os-list li {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #38bdf8;
+        }
+
+        .os-list h4 { font-size: 1.2rem; color: white; margin-bottom: 0.5rem; }
+
+        .os-badge {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, transparent 70%);
+            border: 2px dashed rgba(56, 189, 248, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: rotate 20s linear infinite;
+        }
+
+        .os-badge-inner {
+            text-align: center;
+            animation: reverse-rotate 20s linear infinite; /* Keeps text upright */
+        }
+        
+        .os-badge-inner span {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            letter-spacing: 2px;
+        }
+
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+        @keyframes reverse-rotate { 100% { transform: rotate(-360deg); } }
+
+        /* 新增企業主義務圖片包裝器樣式 */
+        .ob-img-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .ob-img-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -10px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(56,189,248,0.5) 40%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .ob-card:hover .ob-img-wrapper::before {
+            opacity: 0.8;
+            filter: blur(5px);
+        }
+        .ob-dynamic-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .ob-card:hover .ob-dynamic-img {
+            transform: scale(1.15) translateY(-5px);
+        }
+
+        @media (max-width: 900px) {
+            .occupational-safety { flex-direction: column; padding: 2rem; }
+        }
+    </style>
+    <style>
+        /* H-Card 全息背景 */
+        .hcard-container {
+            position: relative;
+        }
+        .hcard-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('images/hcard_hologram_bg.png') center/cover no-repeat;
+            opacity: 0.12;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        canvas#embers-rights {
+            position: fixed;
+            inset: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+        .node-tooltip {
+            position: absolute;
+            top: 120%; /* 顯示在圓圈下方 */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 280px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid #38bdf8;
+            border-top: 4px solid #38bdf8;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(56, 189, 248, 0.2);
+            color: var(--text-secondary);
+            padding: 1.2rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+            pointer-events: none;
+            text-align: left;
+        }
+
+        #withdraw-node .node-tooltip { 
+            top: auto;
+            bottom: 120%;
+            border-top: 1px solid #ef4444;
+            border-bottom: 4px solid #ef4444;
+            transform: translateX(-50%) translateY(-10px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(239,68,68,0.2); 
+        }
+        .bottom-right .node-tooltip { 
+            top: auto;
+            bottom: 120%;
+            border-top: 1px solid #f59e0b;
+            border-bottom: 4px solid #f59e0b;
+            transform: translateX(-50%) translateY(-10px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(245,158,11,0.2); 
+        }
+
+        .right-node:hover .node-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.88), rgba(15, 23, 42, 0.95)), url('images/bg_rights.png') no-repeat center center fixed; background-size: cover;">
+
+    <canvas id="embers-rights"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">⚖️</span>
+                <span class="text">法規與三權</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線安全戰技</a></li>
+                <li><a href="rights.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">消防三權與職安</a></li>
+                <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- 消防三權 Banner -->
+        <div class="rights-banner reveal-fade">
+            <h1 class="split-title" style="margin-bottom: 0.5rem;">消防三權法源架構</h1>
+            <p class="section-desc">透過修法健全防護網，保障第一線防救災人員生命安全與知情權利。</p>
+        </div>
+
+        <!-- 三權黃金三角 (Golden Triangle) -->
+        <div class="golden-triangle-wrapper reveal-fade delay-1">
+            <div class="triangle-container">
+                <svg class="triangle-lines" width="100%" height="100%">
+                    <path d="M 400 90 L 80 410" class="g-line" />
+                    <path d="M 400 90 L 720 410" class="g-line" />
+                    <path d="M 80 410 L 720 410" class="g-line" />
+                    
+                    <path d="M 400 90 L 80 410" class="g-line-active" />
+                </svg>
+                
+                <div class="right-node top-node" id="info-node">
+                    <div class="icon">💻</div>
+                    <h3>資訊權</h3>
+                    <div class="law-tag">消防法 21-1條</div>
+                    <div class="node-tooltip">
+                        <strong style="color: #38bdf8; font-size: 1.1rem;">資訊權 (消防法 第 21-1 條)</strong><br><br>
+                        <span style="color: #cbd5e1;">強制業者提供廠區化學品資訊與平面圖，並指派專人協助。違者將面臨最高數百萬罰鍰以達嚇阻效果。</span>
+                    </div>
+                </div>
+                
+                <div class="right-node bottom-left" id="withdraw-node">
+                    <div class="icon">🛑</div>
+                    <h3>退避權</h3>
+                    <div class="law-tag">消防法 20-1條</div>
+                    <div class="node-tooltip">
+                        <strong style="color: #ef4444; font-size: 1.1rem;">退避權 (消防法 第 20-1 條)</strong><br><br>
+                        <span style="color: #cbd5e1;">在無人命危害之虞的前提下，消防員得不執行危險性救災行動。消防員不是無敵的，當生命無虞，我們有權不冒死衝鋒。</span>
+                    </div>
+                </div>
+                
+                <div class="right-node bottom-right">
+                    <div class="icon">🔍</div>
+                    <h3>調查權</h3>
+                    <div class="law-tag">消防法 27-1條</div>
+                    <div class="node-tooltip">
+                        <strong style="color: #f59e0b; font-size: 1.1rem;">調查權 (消防法 第 27-1 條)</strong><br><br>
+                        <span style="color: #cbd5e1;">增訂災害事故調查會，基層代表參與，確保公開公正發現真相。讓每一次的犧牲不再重演。</span>
+                    </div>
+                </div>
+                
+                <div class="triangle-message">
+                    <strong>黃金三角核心：</strong>「資訊權」是大腦 —— 唯有掌握精確的現場資訊與受困情況，指揮官才能準確判斷是否行使「退避權」。
+                </div>
+            </div>
+        </div>
+
+        <!-- 企業主三大法定義務 (消防法 21-1) 新增區塊 -->
+        <section class="obligations-section reveal-up delay-2" style="margin-top: 6rem;">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 style="color: #38bdf8; font-size: 2.5rem; margin-bottom: 1rem;">企業主無可迴避的 3 大法定義務</h2>
+                <p style="color: var(--text-secondary); font-size: 1.15rem;">當工廠或化學品倉庫發生火災時，管理權人必須立即執行的任務《消防法》第 21-1 條。</p>
+            </div>
+            
+            <div class="obligations-timeline">
+                <div class="ob-card hover-glow" style="--glow-color: #38bdf8;" data-tilt data-tilt-max="8">
+                    <div class="ob-img-wrapper">
+                        <img src="images/ob_map.png" alt="提供圖資" class="ob-dynamic-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'50%\' x=\'50%\' dy=\'0.35em\' text-anchor=\'middle\' font-size=\'60\'>🗺️</text></svg>'">
+                    </div>
+                    <h4>1. 提供圖資</h4>
+                    <p>立即提供場所平面配置圖 (H-Card)、化學品種類、數量及位置等搶救必要資訊。</p>
+                </div>
+                <div class="ob-arrow">➔</div>
+                <div class="ob-card hover-glow" style="--glow-color: #38bdf8;">
+                    <div class="ob-img-wrapper">
+                        <img src="images/ob_cloud.png" alt="資訊更新" class="ob-dynamic-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'50%\' x=\'50%\' dy=\'0.35em\' text-anchor=\'middle\' font-size=\'60\'>☁️</text></svg>'">
+                    </div>
+                    <h4>2. 資訊更新 <span style="font-size:0.8rem; color:#f59e0b;">(第21-2條)</span></h4>
+                    <p>危害風險與內容有變動時，必須<strong>「及時更新」</strong>。絕對不能掛過期牌子應付！</p>
+                </div>
+                <div class="ob-arrow">➔</div>
+                <div class="ob-card hover-glow" style="--glow-color: #38bdf8;">
+                    <div class="ob-img-wrapper">
+                        <img src="images/ob_expert.png" alt="指派專人" class="ob-dynamic-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><text y=\'50%\' x=\'50%\' dy=\'0.35em\' text-anchor=\'middle\' font-size=\'60\'>👷</text></svg>'">
+                    </div>
+                    <h4>3. 指派專人</h4>
+                    <p>立即指派工廠管理權人、EHS或防災中心主管負責建置並全程協助救災。</p>
+                </div>
+            </div>
+            
+            <!-- H-Card 虛擬解剖台與罰款 -->
+            <div class="hcard-container">
+                <div class="hcard-visual">
+                    <div class="hcard-zone" onmouseover="showHCardInfo('廠區基本資料：公司名稱、工廠用途、救災專人聯絡方式、員工人數與勤休狀況。')">1. 廠區基本資料</div>
+                    <div class="hcard-zone" onmouseover="showHCardInfo('化學品內容標示：名稱、包裝、儲存量、危害特性與免標示情形。')">2. 化學品內容標示</div>
+                    <div class="hcard-zone" onmouseover="showHCardInfo('樓層平面圖：化學品 (GHS) 圖示、消防設備、室內材料與配管標示。')">3. 樓層平面圖</div>
+                    <div class="hcard-zone" onmouseover="showHCardInfo('立面圖 (若適用)：適用於化學品使用或管線垂直貫穿樓板之區域。')">4. 立面圖剖析</div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 66px; height: 66px; background: rgba(5, 10, 20, 0.6); border-radius: 50%; pointer-events: none; border: 2px dashed #facc15; display: flex; justify-content: center; align-items: center; color: #facc15; font-size: 1.8rem; font-weight: bold; animation: pulseArrow 2s infinite; z-index: 10; backdrop-filter: blur(4px);">H</div>
+                </div>
+                <div class="hcard-details">
+                    <div class="hcard-info-box" id="hcard-info-display">
+                        <h3>何謂 H-Card？</h3>
+                        <p>協助消防救災掌握現場危害資訊、存放位置與應對方式的**救命資料卡**。<br><br>👉 請將游標移至左側各區域，檢視 H-Card 的 4 大核心要素。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 千萬罰金警告牆 -->
+            <div class="penalty-wall reveal-up delay-1">
+                <div class="penalty-content">
+                    <h2 style="color:white; font-size: 2rem; margin-bottom:0.5rem;">違反義務的代價：大幅加重的超高額罰鍰</h2>
+                    <p style="color:#fca5a5; font-size: 1.1rem; margin-bottom: 2rem;">依據《消防法》第 43-1 條，記住：不給圖、不派人，將面臨千萬級別嚴重後果。</p>
+                    <div class="penalty-item">
+                        <span class="cause">不給圖資 / 給假資料</span>
+                        <span class="fine">最高開罰 500 萬元</span>
+                    </div>
+                    <div class="penalty-item">
+                        <span class="cause">未即時更新或未立即指派專人到場協助</span>
+                        <span class="fine">開罰 50萬 ~ 1,000 萬元</span>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- 退避權：無人命危害之虞決策樹與情境 -->
+        <section class="withdraw-section reveal-up delay-1" style="margin-top: 8rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 style="color: #f59e0b; font-size: 2.5rem; margin-bottom: 1rem;">啟動退避權的「黃金法則」</h2>
+                <p style="color: var(--text-secondary); font-size: 1.15rem;">若確認建築物內無人受困，消防員有權在外部進行防護即可，不需冒死進入。</p>
+            </div>
+            
+            <!-- 互動決策樹 -->
+            <div class="decision-tree-container" id="dtree-container">
+                <div class="decision-node" onclick="runDecision('none')" style="font-size: 1.2rem; font-weight:bold; border-color:#f59e0b; padding:2rem;">現場是否有「人命危害之虞」？</div>
+                <div style="display:flex; justify-content:center; gap: 4rem; margin-top:2rem;">
+                    <div class="decision-node" onclick="runDecision('yes')" style="color:#ef4444;" id="dtree-yes">有的，有民眾待救</div>
+                    <div class="decision-node" onclick="runDecision('no')" style="color:#10b981;" id="dtree-no">無人命需救援 (或受災民眾已無生還可能)</div>
+                </div>
+                <div id="dtree-result" style="margin-top:3rem; padding: 2rem; background:rgba(0,0,0,0.5); border-radius:12px; border:2px dashed #64748b; font-size:1.5rem; opacity:0; transition:0.5s;">
+                    請選擇上方情況...
+                </div>
+            </div>
+            
+            <!-- 6 大情境 -->
+            <div style="margin-top: 6rem;">
+                <h3 class="text-center" style="color: white; font-size: 1.8rem; margin-bottom: 1rem;">法定「危險性救災行動」的 6 大情境</h3>
+                <p class="text-center" style="color:var(--text-secondary); margin-bottom:2rem;">依據認定標準第3條，下列情況得不執行入室搶救：</p>
+                <style>
+                    .scenarios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+                    .interactive-bg-card { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background-size: cover; background-position: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); min-height: 220px; display: flex; flex-direction: column; justify-content: flex-end; cursor: pointer; }
+                    .interactive-bg-card .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 10%, rgba(15, 23, 42, 0.1) 100%); transition: 0.4s; z-index: 1; }
+                    .interactive-bg-card:hover { transform: translateY(-8px) scale(1.02); border-color: #f59e0b; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4); }
+                    .interactive-bg-card:hover .card-overlay { background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(245, 158, 11, 0.3) 100%); }
+                    .interactive-bg-card .card-content { position: relative; z-index: 2; padding: 1.5rem; text-align: center; }
+                    .interactive-bg-card .obj-icon { font-size: 2.5rem; margin-bottom: 0.8rem; filter: drop-shadow(0 0 10px rgba(0,0,0,0.8)); transition: transform 0.4s; transform: translateY(15px); }
+                    .interactive-bg-card h4 { color: #f59e0b; font-size: 1.3rem; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: 0.3s; transform: translateY(10px); }
+                    .interactive-bg-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.4; opacity: 0; transform: translateY(20px); transition: all 0.4s ease; text-shadow: 0 1px 2px black; }
+                    .interactive-bg-card:hover .obj-icon { transform: translateY(0) scale(1.1); filter: drop-shadow(0 0 15px #f59e0b); }
+                    .interactive-bg-card:hover h4 { transform: translateY(0); color: white; }
+                    .interactive-bg-card:hover p { opacity: 1; color: #cbd5e1; transform: translateY(0); }
+                </style>
+                <div class="scenarios-grid">
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_nuke.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">☣️</div><h4>1. 核生化熱區</h4><p>進入核生化災害現場熱區。</p>
+                        </div>
+                    </div>
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_danger.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">🛢️</div><h4>2. 危險場所</h4><p>爆竹煙火、高壓氣體或毒化物質場所。</p>
+                        </div>
+                    </div>
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_fragile.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">🏭</div><h4>3. 脆弱結構</h4><p>輕量型鋼結構建築、印刷電路板(PCB)製造場所。</p>
+                        </div>
+                    </div>
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_tunnel.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">🚇</div><h4>4. 封閉空間</h4><p>長隧道、地下軌道、地下建築物或船艙內。</p>
+                        </div>
+                    </div>
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_collapse.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">🏢</div><h4>5. 倒塌危機</h4><p>進入有倒塌、崩塌之虞之建築物內。</p>
+                        </div>
+                    </div>
+                    <div class="interactive-bg-card" style="background-image: url('images/bg_judge.png');">
+                        <div class="card-overlay"></div>
+                        <div class="card-content">
+                            <div class="obj-icon">📋</div><h4>6. 綜合研判</h4><p>現場各級搶救人員充分綜合分析研判後認定。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 動態儀表板 -->
+            <div style="margin-top: 6rem; background: rgba(0,0,0,0.3); border:1px solid #1e293b; padding: 3rem; border-radius: 20px; text-align:center;">
+                <h3 style="color:#ef4444; font-size: 2rem; margin-bottom: 2rem;">動態撤離：危機前兆的即時反應</h3>
+                <div class="speedometer" id="speedo" onmouseover="triggerWithdraw()" onmouseout="resetWithdraw()">
+                    <div class="speedometer-inner"></div>
+                    <div class="needle" id="speedo-needle"></div>
+                </div>
+                <div id="speedo-msg" style="color:white; font-size: 1.2rem; min-height: 40px; margin-top:2rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
+                    游標移入儀表板以模擬環境惡化（遇閃燃、爆燃前兆、倒塌）...
+                </div>
+            </div>
+        </section>
+
+        <!-- 指揮官職權與財產補償 -->
+        <section class="commander-section reveal-up delay-2" style="margin-top: 8rem; padding-top: 4rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <div class="text-center" style="margin-bottom: 3rem;">
+                <h2 style="color: #ea580c; font-size: 2.5rem; margin-bottom: 1rem;">現場權力的核心工具</h2>
+            </div>
+            
+            <div style="display:flex; flex-wrap:wrap; gap:4rem;">
+                <div style="flex:2; min-width:350px;">
+                    <h3 style="color: white; font-size: 1.8rem; margin-bottom: 2rem;">指揮官的 4 大法定職權 (法第19-22條)</h3>
+                    <div class="commander-grid">
+                        <div class="cmd-box"><div style="font-size:3rem;margin-bottom:1rem;">💥</div><h4 style="color:white;margin-bottom:0.5rem;">1. 緊急處置權</h4><p style="color:var(--text-secondary);font-size:0.9rem;">為救災可使用、損壞或限制人民土地/建物/車輛。</p></div>
+                        <div class="cmd-box"><div style="font-size:3rem;margin-bottom:1rem;">🚧</div><h4 style="color:white;margin-bottom:0.5rem;">2. 劃定警戒區</h4><p style="color:var(--text-secondary);font-size:0.9rem;">劃定周邊限制人車進入，並得強制疏散。</p></div>
+                        <div class="cmd-box"><div style="font-size:3rem;margin-bottom:1rem;">💧</div><h4 style="color:white;margin-bottom:0.5rem;">3. 水源使用權</h4><p style="color:var(--text-secondary);font-size:0.9rem;">可使用附近水源，並通知自來水事業集中供水。</p></div>
+                        <div class="cmd-box"><div style="font-size:3rem;margin-bottom:1rem;">⚡</div><h4 style="color:white;margin-bottom:0.5rem;">4. 截斷能源權</h4><p style="color:var(--text-secondary);font-size:0.9rem;">必要時通知事業機構截斷電源或瓦斯。</p></div>
+                    </div>
+                </div>
+                
+                <div style="flex:1; min-width:300px;">
+                    <h3 style="color: white; font-size: 1.8rem; margin-bottom: 2rem;">財產遭破壞，人民能要求補償嗎？</h3>
+                    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius:12px; border-left:4px solid #facc15;">
+                        <p style="color:white; font-size:1.1rem; margin-bottom:1.5rem;">人民因救災導致財產遭受「特別犧牲」(如車窗被破壞)，火災是因為該人民自己造成的嗎？</p>
+                        <div style="display:flex; flex-direction:column; gap:1rem;">
+                            <div style="background:rgba(239, 68, 68, 0.1); border:1px solid #ef4444; padding:1rem; border-radius:8px; color:white;">
+                                <strong>是 (可歸責於該人民之由者):</strong> 不予補償。
+                            </div>
+                            <div style="background:rgba(16, 185, 129, 0.1); border:1px solid #10b981; padding:1rem; border-radius:8px; color:white;">
+                                <strong>否 (無辜受害):</strong> 可向主管機關請求補償。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 大結尾：救災底線與權責劃分 -->
+            <div style="margin-top: 6rem; background: linear-gradient(90deg, #1e293b, #0f172a); border-radius: 12px; overflow: hidden; display:flex; flex-wrap:wrap; box-shadow:0 20px 40px rgba(0,0,0,0.5);">
+                <div style="flex:1; min-width:200px; padding:2rem; border-right:1px solid rgba(255,255,255,0.1); text-align:center;">
+                    <div style="background:#0f172a; padding:1rem; margin:-2rem -2rem 2rem; color:white; font-weight:bold; font-size:1.2rem;">👨‍🚒 消防員</div>
+                    <strong style="color:#f59e0b; font-size:1.2rem; display:block; margin-bottom:1rem;">退避權</strong>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">確認無人受困，即可不執行危險性救災。</p>
+                </div>
+                <div style="flex:1; min-width:200px; padding:2rem; border-right:1px solid rgba(255,255,255,0.1); text-align:center; background:rgba(250, 204, 21, 0.1);">
+                    <div style="background:#facc15; padding:1rem; margin:-2rem -2rem 2rem; color:#000; font-weight:bold; font-size:1.2rem;">🏭 雇主/老闆</div>
+                    <strong style="color:white; font-size:1.2rem; display:block; margin-bottom:1rem;">資訊提供義務</strong>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">給圖資、傳資訊、派專人。標示及時更新。最高罰1000萬。</p>
+                </div>
+                <div style="flex:1; min-width:200px; padding:2rem; border-right:1px solid rgba(255,255,255,0.1); text-align:center;">
+                    <div style="background:#0f172a; padding:1rem; margin:-2rem -2rem 2rem; color:white; font-weight:bold; font-size:1.2rem;">👑 指揮官</div>
+                    <strong style="color:#38bdf8; font-size:1.2rem; display:block; margin-bottom:1rem;">現場權力</strong>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">緊急處置、戒備、水源、斷能四大權限。</p>
+                </div>
+                <div style="flex:1; min-width:200px; padding:2rem; text-align:center;">
+                    <div style="background:#cbd5e1; padding:1rem; margin:-2rem -2rem 2rem; color:#000; font-weight:bold; font-size:1.2rem;">👥 民眾</div>
+                    <strong style="color:white; font-size:1.2rem; display:block; margin-bottom:1rem;">財產補償</strong>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">無辜民眾特別犧牲，可依法請求補償。</p>
+                </div>
+                <div style="width:100%; background:#ea580c; color:white; padding:1.5rem; text-align:center; font-size:1.5rem; font-weight:bold; letter-spacing:2px;">
+                    觀念總結：無人命危險，行使退避權。保護消防員，落實資訊權！
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- 職安法規專章 -->
+        <section class="occupational-safety reveal-up delay-2">
+            <div class="os-text">
+                <h2>113年消防職安專章新制</h2>
+                <p>參照《職業安全衛生法》（OSHA）與 ISO45001 的精神，政府正式推動各級消防機關建立完善的防護計畫，從系統面保障執勤人員安全。</p>
+                <ul class="os-list">
+                    <li>
+                        <h4>防護裝備與設施完善 (第25條之1)</h4>
+                        <p>要求各級單位為所屬人員提供符合安全衛生需求之防護裝備及設施，預防過勞與熱危害。</p>
+                    </li>
+                    <li>
+                        <h4>職安計畫與管理審查 (第25條之7)</h4>
+                        <p>如同民間企業推行 ISO45001 一般，消防機關須訂定安全與衛生防護計畫，並定期審查運作績效。</p>
+                    </li>
+                    <li>
+                        <h4>罰則與嚇阻力</h4>
+                        <p>未依法提供充足搶救資訊(資訊權)之廠商，將面臨最高數百萬罰鍰之重罰以達嚇阻效果。</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="os-badge reveal-fade delay-3">
+                <div class="os-badge-inner">
+                    <span style="font-size: 1.2rem; color:white;">ISO 45001</span>
+                    <span>職安衛</span>
+                    <span style="font-size: 1.2rem; color:white;">管理系統</span>
+                </div>
+            </div>
+        </section>
+        
+        <div style="height: 100px;"></div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script>
+        // H-Card Interactive Logic
+        function showHCardInfo(text) {
+            const display = document.getElementById('hcard-info-display');
+            display.innerHTML = `<h3>解剖卡細部功能</h3><p style="color:white; font-size:1.2rem;">${text}</p>`;
+            display.style.background = 'rgba(56, 189, 248, 0.2)';
+            display.style.borderColor = '#0ea5e9';
+        }
+
+        // Decision Tree Logic
+        function runDecision(choice) {
+            const resultBox = document.getElementById('dtree-result');
+            const yesNode = document.getElementById('dtree-yes');
+            const noNode = document.getElementById('dtree-no');
+            
+            yesNode.style.opacity = '1';
+            noNode.style.opacity = '1';
+            
+            if (choice === 'yes') {
+                noNode.style.opacity = '0.3';
+                resultBox.innerHTML = '🚨 <strong style="color:#ef4444;">執行救援</strong> 👉 在安全範圍內展開人命搜救。';
+                resultBox.style.borderColor = '#ef4444';
+                resultBox.style.background = 'rgba(239, 68, 68, 0.2)';
+                resultBox.style.color = 'white';
+            } else if (choice === 'no') {
+                yesNode.style.opacity = '0.3';
+                resultBox.innerHTML = '🛡️ <strong style="color:#10b981;">得不執行危險性救災行動</strong> 👉 退避權行使條件成立！在外部防護即可，不需冒死進入。';
+                resultBox.style.borderColor = '#10b981';
+                resultBox.style.background = 'rgba(16, 185, 129, 0.2)';
+                resultBox.style.color = 'white';
+            }
+            resultBox.style.opacity = '1';
+        }
+
+        // Speedometer Logic
+        function triggerWithdraw() {
+            const needle = document.getElementById('speedo-needle');
+            const msg = document.getElementById('speedo-msg');
+            needle.style.transform = 'rotate(80deg)'; // Point to red zone
+            msg.innerHTML = '⚠️ <strong>危險指標急升！</strong><br>搶救人員即可採取<span style="color:#ef4444; font-weight:bold;">撤離行動</span>，並適時回報<span style="color:#ef4444; font-weight:bold;">緊急求救口令 (MAYDAY)</span>。退避權不僅是決定，更是動態防線！';
+            msg.style.borderColor = '#ef4444';
+            msg.style.background = 'rgba(239, 68, 68, 0.3)';
+        }
+        
+        function resetWithdraw() {
+            const needle = document.getElementById('speedo-needle');
+            const msg = document.getElementById('speedo-msg');
+            needle.style.transform = 'rotate(-70deg)'; // Point back to yellow
+            msg.innerHTML = '安全範圍內執行勤務，隨時觀察徵兆與通報...';
+            msg.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+            msg.style.background = 'rgba(239, 68, 68, 0.1)';
+        }
+    </script>
+    <script src="js/effects.js"></script>
+    <script>
+        initEmbers('embers-rights');
+    </script>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線安全戰技</a></li>
+                        <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">法規索引</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="#">📌 消防法 21-1 資訊義務</a></li>
+                        <li><a href="#">📌 消防法 20-1 退避權</a></li>
+                        <li><a href="#">📌 消防法 27-1 調查權</a></li>
+                        <li><a href="#">📌 消防法 43-1 罰則</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v15 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
