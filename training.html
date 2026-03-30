@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
-    <title>前線安全戰技 | 事故安全官資源網</title>
+    <title>前線安全戰技 | 事故安全資源網</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -232,19 +232,25 @@
     </style>
 </head>
 <body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.88), rgba(15, 23, 42, 0.95)), url('images/bg_training.png') no-repeat center center fixed; background-size: cover;">
-
+    <!-- 數位噪點疊加層 -->
+    <div class="noise-overlay"></div>
+    
     <!-- Navbar -->
     <nav class="navbar scrolled">
         <div class="nav-container">
             <div class="logo">
                 <span class="icon">🔥</span>
-                <span class="text">安全戰技</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">安全戰技</div>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">首頁總覽</a></li>
                 <li><a href="training.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">前線安全戰技</a></li>
                 <li><a href="rights.html">消防三權與職安</a></li>
                 <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
@@ -259,6 +265,10 @@
 
     <main class="container" style="padding-top: 8rem;">
         <h1 class="split-title reveal-text text-center" style="margin-bottom: 4rem;">現場安全官四大核心戰技</h1>
+        
+        <div style="display:flex; justify-content:center; margin-bottom:3rem;">
+            <div class="radar-scanner"></div>
+        </div>
         
         <div class="module-section">
             
@@ -698,7 +708,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
                     <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
                 </div>
                 <div>
@@ -708,6 +718,7 @@
                         <li><a href="training.html">🔥 前線安全戰技</a></li>
                         <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
                         <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="experience.html">🛡️ 職安情境體驗</a></li>
                         <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
                     </ul>
                 </div>
@@ -726,8 +737,44 @@
                 <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
                 <span class="footer-badge">v15 · 消防安全教育平台</span>
             </div>
-        </div>
     </footer>
+
+    <!-- Lightbox Modal for VVDC Analysis Image -->
+    <div id="lightbox-modal" class="modal-overlay" style="z-index: 3000;">
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; width: auto; z-index: 3001; text-align: center;">
+            <span class="modal-close" style="position: absolute; top: -50px; right: 0; color: white; font-size: 4rem; cursor: pointer; filter: drop-shadow(0 0 10px black); line-height: 1;">&times;</span>
+            <img id="lightbox-img" src="" style="max-width: 100%; max-height: 80vh; border-radius: 12px; border: 3px solid rgba(234, 88, 12, 0.4); box-shadow: 0 0 100px rgba(0,0,0,0.9); display: block; margin: 0 auto; background: #000;">
+            <p id="lightbox-caption" style="color: #f97316; text-align: center; margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700; text-shadow: 0 2px 15px rgba(0,0,0,1); letter-spacing: 2px;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Lightbox Logic for VVDC analysis-img
+        const vvdcAnalysisImg = document.getElementById('vvdc-analysis-img');
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCaption = document.getElementById('lightbox-caption');
+
+        if (vvdcAnalysisImg) {
+            vvdcAnalysisImg.style.cursor = 'pointer';
+            vvdcAnalysisImg.title = '點擊查看原圖';
+            
+            vvdcAnalysisImg.addEventListener('click', () => {
+                if (vvdcAnalysisImg.src && !vvdcAnalysisImg.src.includes('placeholder')) {
+                    lightboxImg.src = vvdcAnalysisImg.src;
+                    lightboxCaption.innerText = document.getElementById('vvdc-result-title')?.innerText || '戰術火煙分析結果';
+                    lightboxModal.classList.add('active');
+                }
+            });
+        }
+
+        // Close lightbox when clicking the specific close button or the overlay
+        lightboxModal.addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox-modal' || e.target.classList.contains('modal-close')) {
+                lightboxModal.classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
 

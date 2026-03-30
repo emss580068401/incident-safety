@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
-    <title>消防三權與職安 | 事故安全官資源網</title>
+    <title>消防三權與職安 | 事故安全資源網</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/rights-enhanced.css">
@@ -262,7 +262,8 @@
     </style>
 </head>
 <body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.88), rgba(15, 23, 42, 0.95)), url('images/bg_rights.png') no-repeat center center fixed; background-size: cover;">
-
+    <!-- 數位噪點疊加層 -->
+    <div class="noise-overlay"></div>
     <canvas id="embers-rights"></canvas>
 
     <!-- Navbar -->
@@ -270,13 +271,17 @@
         <div class="nav-container">
             <div class="logo">
                 <span class="icon">⚖️</span>
-                <span class="text">法規與三權</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">法規與三權</div>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">首頁總覽</a></li>
                 <li><a href="training.html">前線安全戰技</a></li>
                 <li><a href="rights.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">消防三權與職安</a></li>
                 <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
@@ -657,7 +662,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
                     <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
                 </div>
                 <div>
@@ -667,6 +672,7 @@
                         <li><a href="training.html">🔥 前線安全戰技</a></li>
                         <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
                         <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="experience.html">🛡️ 職安情境體驗</a></li>
                         <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
                     </ul>
                 </div>
@@ -687,6 +693,40 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Lightbox Modal for Scenario Images -->
+    <div id="lightbox-modal" class="modal-overlay" style="z-index: 3000;">
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; width: auto; z-index: 3001; text-align: center;">
+            <span class="modal-close" style="position: absolute; top: -50px; right: 0; color: white; font-size: 4rem; cursor: pointer; filter: drop-shadow(0 0 10px black); line-height: 1;">&times;</span>
+            <img id="lightbox-img" src="" style="max-width: 100%; max-height: 80vh; border-radius: 12px; border: 3px solid rgba(14, 165, 233, 0.4); box-shadow: 0 0 100px rgba(0,0,0,0.9); display: block; margin: 0 auto; background: #000;">
+            <p id="lightbox-caption" style="color: #38bdf8; text-align: center; margin-top: 1.5rem; font-size: 1.5rem; font-weight: 700; text-shadow: 0 2px 15px rgba(0,0,0,1); letter-spacing: 2px;"></p>
+        </div>
+    </div>
+
+    <script>
+        // Lightbox Logic for interactive-bg-card
+        document.querySelectorAll('.interactive-bg-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const bg = card.style.backgroundImage;
+                const match = bg.match(/url\(["']?([^"']+)["']?\)/);
+                const url = match ? match[1] : '';
+                const title = card.querySelector('h4').textContent;
+                
+                if (url) {
+                    document.getElementById('lightbox-img').src = url;
+                    document.getElementById('lightbox-caption').textContent = title;
+                    document.getElementById('lightbox-modal').classList.add('active');
+                }
+            });
+        });
+
+        // Close lightbox when clicking the specific close button or the overlay
+        document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox-modal' || e.target.classList.contains('modal-close')) {
+                document.getElementById('lightbox-modal').classList.remove('active');
+            }
+        });
+    </script>
 </body>
 </html>
 

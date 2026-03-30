@@ -146,14 +146,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.1);
+        
+        // Add a second, higher "tick" for a digital feel
+        const osc2 = audioCtx.createOscillator();
+        const gain2 = audioCtx.createGain();
+        osc2.type = 'square';
+        osc2.frequency.setValueAtTime(2500, audioCtx.currentTime);
+        gain2.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+        osc2.connect(gain2);
+        gain2.connect(audioCtx.destination);
+        osc2.start();
+        osc2.stop(audioCtx.currentTime + 0.04);
     }
 
     // 控制邏輯
@@ -272,10 +284,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 全域互動音效
     document.addEventListener('mousedown', (e) => {
-        const t = e.target;
-        const isInteractive = t.closest('a') || t.closest('button') || t.closest('.portal-card') || 
-                              t.closest('.rehab-item') || t.closest('.right-node') || t.closest('.tag');
-        if(isInteractive && t.id !== 'audio-toggle') {
+        // As requested by user: any interaction should have sound
+        // We exclude the audio-toggle to prevent double sound on that specific button handler if it calls it too
+        if(e.target.id !== 'audio-toggle') {
             playClickSfx();
         }
     });

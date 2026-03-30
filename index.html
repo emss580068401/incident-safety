@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
-    <title>全方位事故安全官防救災資源網</title>
-    <meta name="description" content="全方位事故安全官數位學習資源與法規專區。">
+     <title>全方位事故安全防救災資源網</title>
+    <meta name="description" content="全方位事故安全數位學習資源與法規專區。">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -183,11 +183,14 @@
     </style>
 </head>
 <body class="dark-bg">
+    <!-- 數位噪點疊加層 -->
+    <div class="noise-overlay"></div>
+    
     <!-- 系統初始化引導視窗 (符合瀏覽器音訊規範) -->
     <div id="welcome-overlay" class="welcome-overlay">
         <div class="welcome-content">
             <h2 class="welcome-title">數位指揮中心系統</h2>
-            <p class="welcome-subtitle">事故安全官資源網正在進行系統載入...<br>請點擊下方按鈕以初始化沈浸式影音模組</p>
+            <p class="welcome-subtitle">事故安全資源網正在進行系統載入...<br>請點擊下方按鈕以初始化沈浸式影音模組</p>
             <button id="start-system-btn" class="start-btn">初始化系統</button>
             <div class="system-status">
                 [SYSTEM]: Loading Tactical Data... OK<br>
@@ -199,13 +202,17 @@
         <div class="nav-container">
             <div class="logo">
                 <span class="icon">🛡️</span>
-                <span class="text">事故安全官入口網</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">事故安全入口網</div>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">首頁總覽</a></li>
                 <li><a href="training.html">前線安全戰技</a></li>
                 <li><a href="rights.html">消防三權與職安</a></li>
                 <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
@@ -226,7 +233,7 @@
         <script>
         // 打字機效果
         const typewriterEl = document.getElementById('typewriter-text');
-        const lines = ['全方位事故安全官', '防救災數位資源網'];
+        const lines = ['全方位事故安全', '防救災數位資源網'];
         let lineIndex = 0, charIndex = 0, isDeleting = false, pauseTimer = null;
         function typeLoop() {
             const current = lines[lineIndex];
@@ -258,6 +265,7 @@
         <section class="portal-grid">
             <!-- Portal 1 -->
             <a href="training.html" class="portal-card reveal-up delay-1" style="--hover-color:#38bdf8; --btn-color:#0ea5e9;">
+                <div class="card-bg-visual card-training"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🔥</div>
                 <h2 class="portal-title">現場安全官戰技</h2>
@@ -267,6 +275,7 @@
 
             <!-- Portal 2 -->
             <a href="rights.html" class="portal-card reveal-up delay-2" style="--hover-color:#f59e0b; --btn-color:#ea580c;">
+                <div class="card-bg-visual card-rights"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">⚖️</div>
                 <h2 class="portal-title">消防三權與法規</h2>
@@ -276,6 +285,7 @@
 
             <!-- Portal 3 -->
             <a href="investigation.html" class="portal-card reveal-up delay-3" style="--hover-color:#10b981; --btn-color:#059669;">
+                <div class="card-bg-visual card-investigation"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">📋</div>
                 <h2 class="portal-title">災害事故調查會</h2>
@@ -285,6 +295,7 @@
 
             <!-- Portal 4 -->
             <a href="quiz.html" class="portal-card reveal-up delay-1" style="--hover-color:#a855f7; --btn-color:#9333ea;">
+                <div class="card-bg-visual card-quiz"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🎮</div>
                 <h2 class="portal-title">情境模擬測驗</h2>
@@ -298,7 +309,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
                     <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
                 </div>
                 <div>
@@ -307,6 +318,7 @@
                         <li><a href="index.html">🏠 首頁總覽</a></li>
                         <li><a href="training.html">🔥 前線安全戰技</a></li>
                         <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="experience.html">🛡️ 職安情境體驗</a></li>
                         <li><a href="investigation.html">📋 災害事故調查</a></li>
                         <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
                     </ul>

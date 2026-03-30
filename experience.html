@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情境體驗 | 事故安全資源網</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/experience.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        .hero-mini {
+            padding: 10rem 0 4rem 0;
+            background: linear-gradient(to bottom, #020617, #0f172a);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="dark-bg">
+    <!-- 數位噪點疊加層 -->
+    <div class="noise-overlay"></div>
+    <canvas id="embers-exp"></canvas>
+    
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🛡️</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">事故安全虛擬演練</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線安全戰技</a></li>
+                <li><a href="rights.html">消防三權與職安</a></li>
+                <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="experience.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">情境體驗</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero-mini">
+        <div class="container">
+            <h1 class="split-title">職安情境體驗</h1>
+            <p class="section-desc">結合「風險辨識」與「關鍵決策」，在中繼區與火場熱區磨練新竹縣消防官兵的敏銳直覺與判斷力。</p>
+        </div>
+    </header>
+
+    <section class="section exp-container">
+        <div class="container">
+            <!-- Mode Switcher -->
+            <div class="mode-switcher">
+                <button class="mode-btn active" onclick="switchMode('spotter')">
+                    <span>🔍</span> 風險辨識挑戰
+                </button>
+                <button class="mode-btn" onclick="switchMode('decision')">
+                    <span>⚖️</span> 關鍵決策模擬
+                </button>
+            </div>
+
+            <!-- Hazard Spotter Mode -->
+            <div id="spotter-view" class="game-module">
+                <div class="spotter-layout">
+                    <!-- Hazard Sidebar / Log -->
+                    <div class="hazard-sidebar" id="hazard-sidebar">
+                        <div class="sidebar-header">
+                            <span class="pulse-dot"></span> 軌跡監控與風險通報
+                        </div>
+                        <div class="sidebar-content" id="sidebar-log">
+                            <div class="empty-log">[ 系統就緒 ] 請掃描右側影像以查找潛在風險...</div>
+                        </div>
+                    </div>
+
+                    <div class="game-viewport">
+                        <div class="game-canvas-area" id="game-canvas">
+                            <img id="game-image" src="images/hazard_factory.png" alt="Tactical Scene" class="game-img">
+                            <!-- Hotspots will be injected here -->
+                        </div>
+                        <div class="game-hud">
+                            <div class="hud-stat">
+                                <span class="hud-label">偵測進度</span>
+                                <span class="hud-value"><span id="found-count">0</span> / <span id="total-count">4</span></span>
+                            </div>
+                            <div class="hud-stat">
+                                <span class="hud-label">當前情境</span>
+                                <span class="hud-value" id="scene-name" style="font-size: 1rem; color: #fff;">化工廠內部火警</span>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" onclick="nextScene()">切換下個場景 ➡️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decision Matrix Mode -->
+            <div id="decision-view" class="game-module" style="display: none;">
+                <div class="decision-panel">
+                    <!-- 戰術視覺 (Tactical Visual) -->
+                    <div class="decision-visual">
+                        <img src="images/taiwan_iso_thinking.png" alt="Decision Maker" id="decision-img">
+                    </div>
+
+                    <div class="decision-content">
+                        <!-- 戰術風險儀表板 (Decision Meta) -->
+                        <div class="decision-meta">
+                            <div class="meta-item">
+                                <span class="meta-label">煙熱風險 (THERMAL)</span>
+                                <div class="meta-bar"><div class="bar-fill" id="thermal-bar" style="width: 20%"></div></div>
+                            </div>
+                            <div class="meta-item">
+                                <span class="meta-label">毒性指數 (TOXICITY)</span>
+                                <div class="meta-bar"><div class="bar-fill" id="toxic-bar" style="width: 10%"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="scenario-display">
+                            <div id="decision-text" class="typewriter-text">
+                                [ 指令傳輸中... ]
+                            </div>
+                        </div>
+                        <div id="decision-options" class="decision-options">
+                            <!-- 選項由 JS 生成 -->
+                        </div>
+                    </div>
+
+                    <div id="result-overlay" class="result-overlay">
+                        <h2 id="result-title" class="result-title"></h2>
+                        <p id="result-desc" class="result-desc"></p>
+                        
+                        <div class="legal-citation" id="legal-citation"></div>
+
+                        <button class="mode-btn" onclick="nextDecision()">
+                            <span>➡️</span> 進入下一階段 / 重新模擬
+                        </button>
+                    </div>
+
+                    <div id="eva-alarm" class="eva-alarm">EVACUATE! EVACUATE!</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線安全戰技</a></li>
+                        <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
+                        <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="experience.html">🛡️ 職安情境體驗</a></li>
+                        <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">輔助工具</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="#">🛠️ RIT 戰術檢索</a></li>
+                        <li><a href="#">🛠️ H-Card 快速生成</a></li>
+                        <li><a href="#">🛠️ 撤離指令模擬</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">SIMULATION MODULE ENABLED</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/experience.js"></script>
+    <script>
+        initEmbers('embers-exp');
+    </script>
+</body>
+</html>

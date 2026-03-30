@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1280">
-    <title>災害事故調查工作與角色定位 - 事故安全官</title>
-    <meta name="description" content="探討災害事故安全官的工作與角色定位，強調系統性精進與未來預防，非單純究責。">
+    <title>災害事故調查工作與角色定位 - 事故安全</title>
+    <meta name="description" content="探討災害事故安全的工作與角色定位，強調系統性精進與未來預防，非單純究責。">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,19 +39,25 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-bg">
+    <!-- 數位噪點疊加層 -->
+    <div class="noise-overlay"></div>
     <canvas id="embers-inv"></canvas>
     <nav class="navbar scrolled">
         <div class="nav-container">
             <div class="logo">
                 <span class="icon">🛡️</span>
-                <span class="text">災害事故安全官</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">災害事故安全</div>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">首頁總覽</a></li>
                 <li><a href="training.html">前線安全戰技</a></li>
                 <li><a href="rights.html">消防三權與職安</a></li>
                 <li><a href="investigation.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">災害事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
@@ -510,7 +516,7 @@
                             </div>
                             <div class="case-image">
                                 <div class="badge">情境重建模擬</div>
-                                <div class="placeholder-img japan-bg"></div>
+                                <img src="images/case_japan_fds.png" alt="日本大阪火災案例模擬" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-glass);">
                             </div>
                         </div>
                     </div>
@@ -529,7 +535,7 @@
                             </div>
                             <div class="case-image">
                                 <div class="badge">檢討應變處置</div>
-                                <div class="placeholder-img taiwan-bg"></div>
+                                <img src="images/case_taiwan_rescue.png" alt="新店粗坑壩救援案例" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-glass);">
                             </div>
                         </div>
                     </div>
@@ -550,7 +556,7 @@
         <div class="container">
             <div class="footer-content">
                 <div>
-                    <div class="footer-logo">🛡️ 事故安全官防救災資源網</div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
                     <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
                 </div>
                 <div>
@@ -560,6 +566,7 @@
                         <li><a href="training.html">🔥 前線安全戰技</a></li>
                         <li><a href="rights.html">⚖️ 消防三權與職安</a></li>
                         <li><a href="investigation.html">📋 災害事故調查</a></li>
+                        <li><a href="experience.html">🛡️ 職安情境體驗</a></li>
                         <li><a href="quiz.html">🎮 情境模擬測驗</a></li>
                     </ul>
                 </div>

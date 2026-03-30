@@ -37,6 +37,8 @@
     --tech-blue: rgba(14, 165, 233, 0.4);
     --tech-cyan: #22d3ee;
     --scan-line-color: rgba(34, 211, 238, 0.1);
+    --glow-blue: 0 0 20px rgba(14, 165, 233, 0.5);
+    --glow-fire: 0 0 20px rgba(234, 88, 12, 0.5);
 }
 
 /* Base Styles */
@@ -89,7 +91,19 @@ body::after {
     animation: scanLine 8s linear infinite;
     z-index: 10000;
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.15; /* 降低透明度避免干擾閱讀 */
+}
+
+/* 數位噪點疊加層 */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.4;
 }
 
 @keyframes scanLine {
@@ -182,9 +196,29 @@ a {
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     font-weight: 700;
-    font-size: 1.25rem;
+}
+
+.logo-text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-brand {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.logo-main {
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--text-primary);
 }
 
 .nav-links {
@@ -968,23 +1002,27 @@ a {
     border-left: 3px solid var(--accent-blue);
 }
 
+/* 借鏡案例圖片展示樣式 */
 .case-image {
     position: relative;
-    height: 400px;
+    height: 480px; /* 增加高度預算 */
     border-radius: 20px;
     overflow: hidden;
+    background: rgba(15, 23, 42, 0.8); /* 圖片間隙補足深色底 */
+    border: 1px solid var(--border-glass);
 }
 
 .placeholder-img {
     width: 100%;
     height: 100%;
-    background-size: cover;
+    background-size: contain; /* 由 cover 改為 contain，完整顯示模擬細節 */
     background-position: center;
+    background-repeat: no-repeat;
     border-radius: 20px;
 }
 
-.japan-bg { background: linear-gradient(135deg, rgba(2,6,23,0.8), rgba(2,6,23,0.2)), url('../images/japan_simulation_1774522062898.png'); }
-.taiwan-bg { background: linear-gradient(135deg, rgba(2,6,23,0.8), rgba(2,6,23,0.2)), url('../images/rescue_operation_1774522080694.png'); }
+.japan-bg { background: linear-gradient(135deg, rgba(2,6,23,0.8), rgba(2,6,23,0.2)), url('../images/case_japan_fds.png'); }
+.taiwan-bg { background: linear-gradient(135deg, rgba(2,6,23,0.8), rgba(2,6,23,0.2)), url('../images/case_taiwan_rescue.png'); }
 
 .badge {
     position: absolute;
@@ -1033,8 +1071,18 @@ footer {
 
 .footer-logo {
     font-weight: 700;
-    font-size: 1.25rem;
-    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: white;
+}
+
+.footer-logo small {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 0.2rem;
 }
 
 .footer-tagline {
@@ -1507,4 +1555,82 @@ footer {
 @media (max-width: 600px) {
     .welcome-title { font-size: 1.4rem; }
     .start-btn { padding: 1rem 2rem; font-size: 1rem; }
+}
+
+/* =========================================================================
+   新增：戰術卡片背景效果
+   ========================================================================= */
+.portal-card .card-bg-visual {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.8s ease;
+    z-index: 0;
+    filter: brightness(0.4) saturate(0.8) blur(2px);
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.portal-card:hover .card-bg-visual {
+    opacity: 0.4;
+    transform: scale(1);
+    filter: brightness(0.6) saturate(1) blur(0px);
+}
+
+/* 各卡片專屬背景圖 (使用現有資產) */
+.card-training    { background-image: url('../images/bg_training.png'); }
+.card-rights      { background-image: url('../images/bg_rights.png'); }
+.card-investigation { background-image: url('../images/forensic_map.png'); }
+.card-quiz        { background-image: url('../images/mayday_bg.png'); }
+
+/* 科技發光特效 */
+.glow-border {
+    position: relative;
+    overflow: hidden;
+}
+.glow-border::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    background: linear-gradient(90deg, var(--accent-blue), transparent, var(--accent-blue)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+.glow-border:hover::after {
+    opacity: 1;
+}
+
+/* 雷達掃描視覺 (SVG 輔助) */
+.radar-scanner {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    position: relative;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%);
+}
+.radar-scanner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent-blue), transparent);
+    transform-origin: left center;
+    animation: radarRotate 4s linear infinite;
+}
+@keyframes radarRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
