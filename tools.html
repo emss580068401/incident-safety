@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數位戰術工具 | 事故安全資源網</title>
+    <meta name="description" content="專業消防數位輔助工具，提升現場救災效率與精準度。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .tools-container {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .tools-hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 1)), url('images/fire_safety_hud.png') no-repeat center center / cover;
+            padding-top: 6rem;
+        }
+
+        .tool-intro-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 24px;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .tool-intro-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #06b6d4;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tool-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-description {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            text-align: left;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            color: #06b6d4;
+            font-size: 1.5rem;
+        }
+
+        .feature-text h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-text p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .launch-btn {
+            display: inline-block;
+            padding: 1.2rem 4rem;
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            color: white;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .launch-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .coming-soon-banner {
+            padding: 3rem;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body class="dark-bg">
+    <div class="noise-overlay"></div>
+    <div class="crt-overlay"
+        style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;">
+    </div>
+
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🧮</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">數位戰術工具</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線戰技</a></li>
+                <li><a href="rights.html">三權法規</a></li>
+                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
+                <li><a href="investigation.html">事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+                <li><a href="games.html">遊戲館</a></li>
+                <li><a href="media.html">影音館</a></li>
+                <li><a href="tools.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">數位工具</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="tools-hero">
+            <div>
+                <h1 class="reveal-fade" style="font-size: 3.5rem; font-weight: 800; color: white;">數位戰術工具箱</h1>
+                <p class="subtitle reveal-fade delay-1">精準數據支援，強化救災現場決策效率</p>
+            </div>
+        </section>
+
+        <div class="tools-container">
+            <div class="tool-intro-card reveal-up delay-1">
+                <div class="tool-badge">Featured Tool</div>
+                <h2 class="tool-title">新竹縣消防水源計算機</h2>
+                <div class="tool-description">
+                    這是一套專為消防水源官設計的數位決策輔助工具。在救災現場，精確的水源調度是成功滅火的關鍵。本工具能協助您快速計算各項關鍵數據，確保供水鏈不斷絕。
+                </div>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">💧</div>
+                        <div class="feature-text">
+                            <h4>流量與壓力計算</h4>
+                            <p>根據火場規模與出水線數量，自動換算所需總流量與Pump輸出壓力。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⛓️</div>
+                        <div class="feature-text">
+                            <h4>中繼供水規劃</h4>
+                            <p>精確計算長距離中繼所需的車輛配置與壓力損失補償。</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⏱️</div>
+                        <div class="feature-text">
+                            <h4>剩餘時間預估</h4>
+                            <p>即時監測水箱剩餘量，並根據目前流量產出預期可持續作業時間。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://emss580068401.github.io/hsinchu-watercalc/" target="_blank"
+                    class="launch-btn">啟動水源計算機</a>
+            </div>
+
+            <div class="coming-soon-banner reveal-up delay-2">
+                <p>⚙️ 更多戰術工具正在開發中 (如：建築坍塌風險評估、危險品安全距離換算...)</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線戰技</a></li>
+                        <li><a href="rights.html">⚖️ 三權法規</a></li>
+                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒
+                                安駕學習</a></li>
+                        <li><a href="experience.html">🛡️ 職安體驗</a></li>
+                        <li><a href="investigation.html">📋 事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境測驗</a></li>
+                        <li><a href="games.html">🎰 遊戲館</a></li>
+                        <li><a href="media.html">🎙️ 影音館</a></li>
+                        <li><a href="tools.html">🧮 數位工具</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v16 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

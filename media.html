@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>影音戰術館 | 事故安全資源網</title>
+    <meta name="description" content="全方位事故安全影音資源，包含戰術實錄與精神傳承影片。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <style>
+        .media-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        .media-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .media-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 3rem;
+            margin-bottom: 6rem;
+        }
+
+        .video-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-tag {
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .video-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .video-description {
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .podcast-section {
+            margin-top: 4rem;
+            padding: 4rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        .podcast-placeholder-title {
+            font-size: 2rem;
+            color: #38bdf8;
+            margin-bottom: 1rem;
+        }
+
+        .hero-media {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 1)), url('images/tactical_media_center_1774922271235.png') no-repeat center center / cover;
+            padding-top: 6rem;
+        }
+    </style>
+</head>
+<body class="dark-bg">
+    <div class="noise-overlay"></div>
+    <div class="crt-overlay" style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;"></div>
+
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🎙️</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">影音戰術館</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線戰技</a></li>
+                <li><a href="rights.html">三權法規</a></li>
+                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
+                <li><a href="investigation.html">事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+                <li><a href="games.html">遊戲館</a></li>
+                <li><a href="media.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">影音館</a></li>
+                <li><a href="tools.html">數位工具</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero-media">
+            <div>
+                <h1 class="media-title reveal-fade">影音戰術館</h1>
+                <p class="subtitle reveal-fade delay-1">集結戰術實務、Podcast 深談與生存戰技影音</p>
+            </div>
+        </section>
+
+        <div class="media-container">
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card reveal-up delay-1">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/QLlxV08UzyQ?rel=0&enablejsapi=1&origin=https://www.youtube.com" 
+                                title="火光下的從容 2.0" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">戰術宣導</span>
+                        <h2 class="video-name">火光下的從容 2.0</h2>
+                        <p class="video-description">推廣「事故安全官 (ISO)」制度，結合實戰場景與專業解析，展現消防戰術指揮中的專業、冷靜與從容，是理解現代消防安全體系的重要影音。</p>
+                        <a href="https://www.youtube.com/watch?v=QLlxV08UzyQ" target="_blank" class="fallback-link" style="display:inline-block; margin-top:1.5rem; color:#38bdf8; text-decoration:underline; font-size:0.9rem;">↗️ 在 YouTube 上開啟影片</a>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card reveal-up delay-2">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/ITc2b8YrChg?rel=0&enablejsapi=1&origin=https://www.youtube.com" 
+                                title="回家的方向" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <div class="video-info">
+                        <span class="video-tag">精神傳承</span>
+                        <h2 class="video-name">回家的方向</h2>
+                        <p class="video-description">落實職安環境、捍衛三權法規。透過溫暖且堅定的音樂動畫，詮釋消防員在面對惡火與生死交關時，內心對使命的堅持以及對「回家平安」的深刻渴望。</p>
+                        <a href="https://www.youtube.com/watch?v=ITc2b8YrChg" target="_blank" class="fallback-link" style="display:inline-block; margin-top:1.5rem; color:#38bdf8; text-decoration:underline; font-size:0.9rem;">↗️ 在 YouTube 上開啟影片</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="podcast-section reveal-up delay-3">
+                <div class="podcast-placeholder-title">🎙️ 戰術深談 Podcast</div>
+                <p style="color: #64748b; font-size: 1.2rem;">專屬消防員的對話空間。即將上線兩部深入探討火場生存心法與現場指揮藝術的語音單元，敬請期待。</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">🛡️ 新竹縣政府消防局 <small>事故安全防救災資源網</small></div>
+                    <p class="footer-tagline">將消防法規、災害調查與前線安全戰技<br>轉化為可立即實踐的數位學習資源。</p>
+                </div>
+                <div>
+                    <p class="footer-nav-title">快速導航</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="index.html">🏠 首頁總覽</a></li>
+                        <li><a href="training.html">🔥 前線戰技</a></li>
+                        <li><a href="rights.html">⚖️ 三權法規</a></li>
+                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒 安駕學習</a></li>
+                        <li><a href="experience.html">🛡️ 職安體驗</a></li>
+                        <li><a href="investigation.html">📋 事故調查</a></li>
+                        <li><a href="quiz.html">🎮 情境測驗</a></li>
+                        <li><a href="games.html">🎰 遊戲館</a></li>
+                        <li><a href="media.html">🎙️ 影音館</a></li>
+                        <li><a href="tools.html">🧮 數位工具</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <p class="footer-nav-title">熱門觀看</p>
+                    <ul class="footer-nav-links">
+                        <li><a href="#">🎬 火光下的從容 2.0</a></li>
+                        <li><a href="#">🎵 回家的方向 MV</a></li>
+                        <li><a href="#">🎙️ 戰術心法錄 (Coming Soon)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 災害事故調查與安全提升專案. All rights reserved.</p>
+                <span class="footer-badge">v16 · 消防安全教育平台</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

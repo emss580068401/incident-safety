@@ -185,7 +185,7 @@ a {
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 1400px; /* Increased to 1400px for 10 menu items */
     margin: 0 auto;
     padding: 0 2rem;
     display: flex;
@@ -207,7 +207,7 @@ a {
 }
 
 .logo-brand {
-    font-size: 0.75rem;
+    font-size: 0.85rem; /* Increased from 0.75rem */
     font-weight: 500;
     color: var(--text-muted);
     letter-spacing: 0.1em;
@@ -216,7 +216,7 @@ a {
 }
 
 .logo-main {
-    font-size: 1.2rem;
+    font-size: 1.4rem; /* Increased from 1.2rem */
     line-height: 1;
     color: var(--text-primary);
 }
@@ -224,15 +224,18 @@ a {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1.2rem; /* Increased from 0.8rem for better desktop spacing */
 }
 
 .nav-links li a {
     color: var(--text-secondary);
-    font-weight: 500;
+    font-size: 1rem; /* Increased from 0.82rem */
+    font-weight: 600;
     transition: var(--transition-fast);
     position: relative;
-    padding-bottom: 0.25rem;
+    padding: 0.6rem 0.4rem; /* Added padding to increase click area */
+    white-space: nowrap;
+    display: block;
 }
 
 .nav-links li a::after {
@@ -1586,6 +1589,13 @@ footer {
 .card-rights      { background-image: url('../images/bg_rights.png'); }
 .card-investigation { background-image: url('../images/forensic_map.png'); }
 .card-quiz        { background-image: url('../images/mayday_bg.png'); }
+.card-driving     { background-image: url('../images/defensive_driving.png'); }
+.card-media       { background-image: url('tactical_media_center_1774922271235.png'); }
+.card-tools       { background: linear-gradient(135deg, #064e3b 0%, #020617 100%), 
+                    radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%); }
+.card-media       { background-image: url('tactical_media_center_1774922271235.png'); }
+.card-tools       { background: linear-gradient(135deg, #064e3b 0%, #020617 100%), 
+                    radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%); }
 
 /* 科技發光特效 */
 .glow-border {
