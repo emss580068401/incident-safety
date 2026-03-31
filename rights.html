@@ -493,14 +493,31 @@
             </div>
             
             <!-- 動態儀表板 -->
-            <div style="margin-top: 6rem; background: rgba(0,0,0,0.3); border:1px solid #1e293b; padding: 3rem; border-radius: 20px; text-align:center;">
-                <h3 style="color:#ef4444; font-size: 2rem; margin-bottom: 2rem;">動態撤離：危機前兆的即時反應</h3>
-                <div class="speedometer" id="speedo" onmouseover="triggerWithdraw()" onmouseout="resetWithdraw()">
-                    <div class="speedometer-inner"></div>
-                    <div class="needle" id="speedo-needle"></div>
+            <div style="margin-top: 6rem; background: rgba(0,0,0,0.3); border:1px solid #1e293b; padding: 4rem 3rem; border-radius: 24px; text-align:center; position:relative; overflow:visible;">
+                <h3 style="color:#ef4444; font-size: 2.2rem; margin-bottom: 3rem; letter-spacing:1px;">動態撤離：危機前兆的即時反應</h3>
+                
+                <div style="position:relative; width:fit-content; margin: 0 auto; cursor: crosshair;" onmousemove="updateSpeedo(event)" onmouseleave="resetSpeedo()">
+                    <div class="speedometer" id="speedo">
+                        <div class="speedometer-inner">
+                            <div id="speedo-percent" style="font-size: 1.5rem; color: #94a3b8; font-family: monospace;">0%</div>
+                        </div>
+                        <div class="needle" id="speedo-needle"></div>
+                    </div>
+                    
+                    <!-- 戰術提醒標記點 -->
+                    <div class="speedometer-marker marker-flashover" id="m-flashover">
+                        🔥 <span>遇閃燃</span>
+                    </div>
+                    <div class="speedometer-marker marker-backdraft" id="m-backdraft">
+                        💥 <span>爆燃前兆</span>
+                    </div>
+                    <div class="speedometer-marker marker-collapse" id="m-collapse">
+                        🏢 <span>倒塌</span>
+                    </div>
                 </div>
-                <div id="speedo-msg" style="color:white; font-size: 1.2rem; min-height: 40px; margin-top:2rem; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.3);">
-                    游標移入儀表板以模擬環境惡化（遇閃燃、爆燃前兆、倒塌）...
+
+                <div id="speedo-msg" style="color:#cbd5e1; font-size: 1.25rem; min-height: 80px; margin-top:3rem; padding: 1.5rem; background: rgba(15, 23, 42, 0.6); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s; display: flex; align-items: center; justify-content: center; line-height: 1.6;">
+                    安全範圍內執行勤務，隨時觀察徵兆與通報...
                 </div>
             </div>
         </section>
@@ -636,22 +653,64 @@
         }
 
         // Speedometer Logic
-        function triggerWithdraw() {
+        function updateSpeedo(e) {
+            const speedo = document.getElementById('speedo');
             const needle = document.getElementById('speedo-needle');
+            const percentDisplay = document.getElementById('speedo-percent');
             const msg = document.getElementById('speedo-msg');
-            needle.style.transform = 'rotate(80deg)'; // Point to red zone
-            msg.innerHTML = '⚠️ <strong>危險指標急升！</strong><br>搶救人員即可採取<span style="color:#ef4444; font-weight:bold;">撤離行動</span>，並適時回報<span style="color:#ef4444; font-weight:bold;">緊急求救口令 (MAYDAY)</span>。退避權不僅是決定，更是動態防線！';
-            msg.style.borderColor = '#ef4444';
-            msg.style.background = 'rgba(239, 68, 68, 0.3)';
+            
+            const rect = speedo.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            let percent = Math.max(0, Math.min(100, Math.round((x / rect.width) * 100)));
+            
+            // Rotation: -90deg (0%) to 90deg (100%)
+            let angle = (percent * 1.8) - 90;
+            needle.style.transform = `rotate(${angle}deg)`;
+            percentDisplay.textContent = `${percent}%`;
+            
+            // Reset markers
+            document.querySelectorAll('.speedometer-marker').forEach(m => m.classList.remove('active'));
+            
+            // Contextual Logic
+            if (percent < 30) {
+                msg.innerHTML = '✅ <span style="color:#10b981; font-weight:bold;">安全區域</span>：維持現狀，持續通報生命跡象。';
+                msg.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                msg.style.boxShadow = 'none';
+            } else if (percent < 60) {
+                msg.innerHTML = '⚠️ <span style="color:#f59e0b; font-weight:bold;">警覺區域</span>：環境惡化中，隨時準備行使退避權。';
+                msg.style.borderColor = 'rgba(245, 158, 11, 0.3)';
+                msg.style.boxShadow = 'none';
+            } else {
+                msg.style.borderColor = '#ef4444';
+                msg.style.boxShadow = '0 0 20px rgba(239, 68, 68, 0.3)';
+                
+                if (percent >= 60 && percent < 75) {
+                    document.getElementById('m-flashover').classList.add('active');
+                    msg.innerHTML = '🔥 <span style="color:#ef4444; font-weight:900;">遇閃燃 (Flashover)</span>：強烈熱輻射警告！人員應立即撤至外部。';
+                    if(window.tacticalAudio) tacticalAudio.playBeep(880, 0.1); 
+                } else if (percent >= 75 && percent < 90) {
+                    document.getElementById('m-backdraft').classList.add('active');
+                    msg.innerHTML = '💥 <span style="color:#ef4444; font-weight:900;">爆燃前兆 (Backdraft)</span>：偵測到中性面急閃。立即停止入室！';
+                    if(window.tacticalAudio) { tacticalAudio.playBeep(1200, 0.05); tacticalAudio.playBeep(1200, 0.05); }
+                } else {
+                    document.getElementById('m-collapse').classList.add('active');
+                    msg.innerHTML = '⛔ <span style="color:#ef4444; font-weight:900;">倒塌危機 (Collapse)</span>：結構失去支撐。即刻宣告 MAYDAY 並撤離！';
+                    if(window.tacticalAudio) tacticalAudio.playAlert();
+                }
+            }
         }
         
-        function resetWithdraw() {
+        function resetSpeedo() {
             const needle = document.getElementById('speedo-needle');
+            const percentDisplay = document.getElementById('speedo-percent');
             const msg = document.getElementById('speedo-msg');
-            needle.style.transform = 'rotate(-70deg)'; // Point back to yellow
+            
+            needle.style.transform = 'rotate(-90deg)';
+            percentDisplay.textContent = '0%';
             msg.innerHTML = '安全範圍內執行勤務，隨時觀察徵兆與通報...';
-            msg.style.borderColor = 'rgba(239, 68, 68, 0.3)';
-            msg.style.background = 'rgba(239, 68, 68, 0.1)';
+            msg.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            msg.style.boxShadow = 'none';
+            document.querySelectorAll('.speedometer-marker').forEach(m => m.classList.remove('active'));
         }
     </script>
     <script src="js/effects.js"></script>
