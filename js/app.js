@@ -142,66 +142,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 點擊音效 (UI 提示音)
     function playClickSfx() {
-        if(!audioCtx) initAudio();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.1);
-        
-        // Add a second, higher "tick" for a digital feel
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.type = 'square';
-        osc2.frequency.setValueAtTime(2500, audioCtx.currentTime);
-        gain2.gain.setValueAtTime(0.02, audioCtx.currentTime);
-        gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-        osc2.connect(gain2);
-        gain2.connect(audioCtx.destination);
-        osc2.start();
-        osc2.stop(audioCtx.currentTime + 0.04);
+        try {
+            if(!audioCtx) initAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+            
+            // Add a second, higher "tick" for a digital feel
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.type = 'square';
+            osc2.frequency.setValueAtTime(2500, audioCtx.currentTime);
+            gain2.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
+            osc2.connect(gain2);
+            gain2.connect(audioCtx.destination);
+            osc2.start();
+            osc2.stop(audioCtx.currentTime + 0.04);
+        } catch(e) {
+            console.warn("SFX failed to play", e);
+        }
     }
 
     // 控制邏輯
     function startBGM() {
         initAudio();
-        bgmAudio.play().catch(e => console.log("Autoplay blocked, waiting for interaction"));
+        bgmAudio.play().then(() => {
+            console.log("BGM started successfully");
+        }).catch(e => {
+            console.log("Autoplay blocked or play interrupted, waiting for interaction");
+        });
         
         sessionStorage.setItem('bgm_playing', 'true');
-        const btn = document.getElementById('audio-toggle');
-        if(btn) btn.classList.add('playing');
-        const icon = document.querySelector('#audio-toggle .icon');
-        if(icon) icon.textContent = '🔊';
+        updateAudioBtnUI(true);
     }
 
     function stopBGM() {
+        // 1. 停止背景音樂
         bgmAudio.pause();
+        
+        // 2. 停止頁面上所有的 audio 與 video (針對影音館等頁面)
+        const allAudio = document.querySelectorAll('audio');
+        const allVideo = document.querySelectorAll('video');
+        allAudio.forEach(a => { if(a !== bgmAudio) a.pause(); });
+        allVideo.forEach(v => v.pause());
+
         sessionStorage.setItem('bgm_playing', 'false');
+        updateAudioBtnUI(false);
+    }
+
+    function updateAudioBtnUI(isPlaying) {
         const btn = document.getElementById('audio-toggle');
-        if(btn) btn.classList.remove('playing');
-        const icon = document.querySelector('#audio-toggle .icon');
-        if(icon) icon.textContent = '🔇';
+        if (btn) {
+            btn.classList.toggle('playing', isPlaying);
+            const icon = btn.querySelector('.icon');
+            if (icon) icon.textContent = isPlaying ? '🔊' : '🔇';
+        }
     }
 
     // 建立 UI 控制按鈕
     const audioWrapper = document.createElement('div');
+    audioWrapper.id = 'audio-control-container';
     const isPlaying = sessionStorage.getItem('bgm_playing') === 'true';
     audioWrapper.innerHTML = `<button id="audio-toggle" class="audio-btn ${isPlaying ? 'playing' : ''}" title="切換背景音樂">
         <span class="icon">${isPlaying ? '🔊' : '🔇'}</span>
     </button>`;
     document.body.appendChild(audioWrapper);
 
-    document.getElementById('audio-toggle').addEventListener('click', (e) => {
-        e.stopPropagation();
-        playClickSfx();
-        if (!bgmAudio.paused) stopBGM(); else startBGM();
-    });
+    const toggleBtn = document.getElementById('audio-toggle');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playClickSfx();
+            // 讀取目前的播放狀態決定是要開啟還是關閉
+            const currentlyPlaying = sessionStorage.getItem('bgm_playing') === 'true';
+            if (currentlyPlaying) stopBGM(); else startBGM();
+        });
+    }
 
     // 系統初始化引導視窗控制
     const startBtn = document.getElementById('start-system-btn');
@@ -213,7 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
             welcomeOverlay.style.display = 'none';
         }
 
-        startBtn.addEventListener('click', () => {
+        startBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
             sessionStorage.setItem('system_initialized', 'true');
             welcomeOverlay.classList.add('fade-out');
             
@@ -229,11 +255,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let firstX = true;
-    const triggerAudio = () => {
+    const triggerAudio = (e) => {
+        // 排除點擊到切換按鈕本身，以免邏輯衝突
+        if (e.target.closest('#audio-toggle')) return;
+
         if(firstX) {
             initAudio();
             if(sessionStorage.getItem('bgm_playing') === 'true') {
                 startBGM();
+            } else {
+                stopBGM(); // 確保 UI 與音訊同步為關閉
             }
             // 如果視窗還在，也讓它消失 (保險起見)
             if (welcomeOverlay) welcomeOverlay.classList.add('fade-out');
@@ -242,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     document.addEventListener('click', triggerAudio);
-    document.addEventListener('touchstart', triggerAudio); // 增加手機端觸發支援
+    document.addEventListener('touchstart', triggerAudio, {passive: true});
 
     // 全局行動端選單控制 (漢堡按鈕)
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -284,9 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 全域互動音效
     document.addEventListener('mousedown', (e) => {
-        // As requested by user: any interaction should have sound
-        // We exclude the audio-toggle to prevent double sound on that specific button handler if it calls it too
-        if(e.target.id !== 'audio-toggle') {
+        // 如果是點擊音訊切換按鈕，不在此處播放音效以免重複
+        if(!e.target.closest('#audio-toggle')) {
             playClickSfx();
         }
     });
