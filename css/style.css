@@ -1585,17 +1585,15 @@ footer {
 }
 
 /* 各卡片專屬背景圖 (使用現有資產) */
-.card-training    { background-image: url('../images/bg_training.png'); }
-.card-rights      { background-image: url('../images/bg_rights.png'); }
+.card-training      { background-image: url('../images/bg_training.png'); }
+.card-rights        { background-image: url('../images/bg_rights.png'); }
 .card-investigation { background-image: url('../images/forensic_map.png'); }
-.card-quiz        { background-image: url('../images/mayday_bg.png'); }
-.card-driving     { background-image: url('../images/defensive_driving.png'); }
-.card-media       { background-image: url('tactical_media_center_1774922271235.png'); }
-.card-tools       { background: linear-gradient(135deg, #064e3b 0%, #020617 100%), 
-                    radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%); }
-.card-media       { background-image: url('tactical_media_center_1774922271235.png'); }
-.card-tools       { background: linear-gradient(135deg, #064e3b 0%, #020617 100%), 
-                    radial-gradient(circle at center, var(--accent-blue) 0%, transparent 70%); }
+.card-experience    { background-image: url('../images/rpg_memoir_teaser.png'); }
+.card-quiz          { background-image: url('../images/mayday_bg.png'); }
+.card-games         { background-image: url('../images/three_kingdoms_fire_teaser.png'); }
+.card-media         { background-image: url('../images/fire_safety_hud.png'); }
+.card-tools         { background-image: url('../images/tactical_brain_hud.png'); }
+.card-driving       { background-image: url('../images/defensive_driving.png'); }
 
 /* 科技發光特效 */
 .glow-border {

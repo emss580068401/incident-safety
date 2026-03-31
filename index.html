@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>全方位事故安全防救災資源網</title>
+    <title>全方位事故安全防救災資源網</title>
     <meta name="description" content="全方位事故安全數位學習資源與法規專區。">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         /* Portal Specific Styles */
@@ -93,7 +96,7 @@
 
         .portal-btn {
             background: transparent;
-            border: 2px solid rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
             padding: 0.8rem 2rem;
             border-radius: 50px;
             color: white;
@@ -131,9 +134,17 @@
             vertical-align: text-bottom;
             animation: cursor-blink 0.8s step-end infinite;
         }
+
         @keyframes cursor-blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
 
         /* HUD Corners */
@@ -185,8 +196,8 @@
         .crt-overlay {
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             background-size: 100% 4px, 3px 100%;
             pointer-events: none;
             z-index: 10001;
@@ -253,11 +264,12 @@
         }
     </style>
 </head>
+
 <body class="dark-bg">
     <!-- 數位噪點與 CRT 疊加層 -->
     <div class="noise-overlay"></div>
     <div class="crt-overlay"></div>
-    
+
     <!-- 系統初始化引導視窗 (符合瀏覽器音訊規範) -->
     <div id="welcome-overlay" class="welcome-overlay">
         <div class="welcome-content">
@@ -276,20 +288,21 @@
                 <span class="icon">🛡️</span>
                 <div class="logo-text-group">
                     <div class="logo-brand">新竹縣政府消防局</div>
-                    <div class="logo-main">事故安全入口網</div>
+                    <div class="logo-main">事故安全數位學習網</div>
                 </div>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">首頁總覽</a></li>
+                <li><a href="index.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">首頁總覽</a>
+                </li>
                 <li><a href="training.html">前線戰技</a></li>
                 <li><a href="rights.html">三權法規</a></li>
-                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
                 <li><a href="investigation.html">事故調查</a></li>
                 <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
                 <li><a href="games.html">遊戲館</a></li>
                 <li><a href="media.html">影音館</a></li>
                 <li><a href="tools.html">數位工具</a></li>
+                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
                 <span class="toggler-bar bar1"></span>
@@ -304,11 +317,12 @@
             <div class="hud-overlay"></div>
             <h1 class="reveal-text"><span id="typewriter-text"></span><span class="typewriter-cursor"></span></h1>
             <p class="subtitle reveal-fade delay-1">從前線戰技到事後調查，構築最堅固的安全防線</p>
-            
+
             <!-- 個人訓練進度儀表板 -->
             <div class="dashboard-container reveal-up delay-2">
                 <div class="dashboard-title">
-                    <span class="pulse-dot" style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%; display: inline-block; animation: pulse 1s infinite alternate;"></span>
+                    <span class="pulse-dot"
+                        style="width: 8px; height: 8px; background: #38bdf8; border-radius: 50%; display: inline-block; animation: pulse 1s infinite alternate;"></span>
                     個人戰技訓練進度 (Training Readiness)
                 </div>
                 <div id="progress-dashboard">
@@ -319,60 +333,63 @@
         </section>
 
         <script>
-        // 打字機效果
-        const typewriterEl = document.getElementById('typewriter-text');
-        const lines = ['全方位事故安全', '防救災數位資源網'];
-        let lineIndex = 0, charIndex = 0, isDeleting = false, pauseTimer = null;
-        function typeLoop() {
-            const current = lines[lineIndex];
-            if (!isDeleting) {
-                typewriterEl.textContent = current.substring(0, charIndex + 1);
-                charIndex++;
-                if (charIndex === current.length) {
-                    if (lineIndex === lines.length - 1) {
-                        // 最後一行打完就停住，不再消除
-                        typewriterEl.innerHTML = lines[0] + '<br>' + lines[1];
+            // 打字機效果
+            const typewriterEl = document.getElementById('typewriter-text');
+            const lines = ['全方位事故安全', '防救災數位資源網'];
+            let lineIndex = 0, charIndex = 0, isDeleting = false, pauseTimer = null;
+            function typeLoop() {
+                const current = lines[lineIndex];
+                if (!isDeleting) {
+                    typewriterEl.textContent = current.substring(0, charIndex + 1);
+                    charIndex++;
+                    if (charIndex === current.length) {
+                        if (lineIndex === lines.length - 1) {
+                            // 最後一行打完就停住，不再消除
+                            typewriterEl.innerHTML = lines[0] + '<br>' + lines[1];
+                            return;
+                        }
+                        pauseTimer = setTimeout(() => { isDeleting = true; typeLoop(); }, 900);
                         return;
                     }
-                    pauseTimer = setTimeout(() => { isDeleting = true; typeLoop(); }, 900);
-                    return;
+                } else {
+                    typewriterEl.textContent = current.substring(0, charIndex - 1);
+                    charIndex--;
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        lineIndex++;
+                    }
                 }
-            } else {
-                typewriterEl.textContent = current.substring(0, charIndex - 1);
-                charIndex--;
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    lineIndex++;
-                }
+                setTimeout(typeLoop, isDeleting ? 50 : 90);
             }
-            setTimeout(typeLoop, isDeleting ? 50 : 90);
-        }
-        setTimeout(typeLoop, 600);
+            setTimeout(typeLoop, 600);
         </script>
 
         <section class="portal-grid">
-            <!-- Portal 1 -->
-            <a href="training.html" class="portal-card reveal-up delay-1" style="--hover-color:#38bdf8; --btn-color:#0ea5e9;">
+            <!-- Portal 1: Training -->
+            <a href="training.html" class="portal-card reveal-up delay-1"
+                style="--hover-color:#38bdf8; --btn-color:#0ea5e9;">
                 <div class="card-bg-visual card-training"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🔥</div>
-                <h2 class="portal-title">現場安全官戰技</h2>
+                <h2 class="portal-title">前線安全官戰技</h2>
                 <p class="portal-desc">火煙/建築判讀、MAYDAY 應變策略、與救災後勤照護 (REHAB) 管制系統。</p>
                 <div class="portal-btn">進入實務訓練</div>
             </a>
 
-            <!-- Portal 2 -->
-            <a href="rights.html" class="portal-card reveal-up delay-2" style="--hover-color:#f59e0b; --btn-color:#ea580c;">
+            <!-- Portal 2: Rights -->
+            <a href="rights.html" class="portal-card reveal-up delay-2"
+                style="--hover-color:#f59e0b; --btn-color:#ea580c;">
                 <div class="card-bg-visual card-rights"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">⚖️</div>
                 <h2 class="portal-title">消防三權與法規</h2>
-                <p class="portal-desc">資訊權、退避權、調查權解析，及 113年最新消防法職安專章、ISO45001介紹。</p>
+                <p class="portal-desc">資訊權、退避權、調查權解析，及 113年最新消防法職安專章、ISO45001 介紹。</p>
                 <div class="portal-btn">閱讀法規專章</div>
             </a>
 
-            <!-- Portal 3 -->
-            <a href="investigation.html" class="portal-card reveal-up delay-3" style="--hover-color:#10b981; --btn-color:#059669;">
+            <!-- Portal 3: Investigation -->
+            <a href="investigation.html" class="portal-card reveal-up delay-3"
+                style="--hover-color:#10b981; --btn-color:#059669;">
                 <div class="card-bg-visual card-investigation"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">📋</div>
@@ -381,8 +398,20 @@
                 <div class="portal-btn">查閱調查報告</div>
             </a>
 
-            <!-- Portal 4 -->
-            <a href="quiz.html" class="portal-card reveal-up delay-1" style="--hover-color:#a855f7; --btn-color:#9333ea;">
+            <!-- Portal 4: Experience -->
+            <a href="experience.html" class="portal-card reveal-up delay-1"
+                style="--hover-color:#fbbf24; --btn-color:#d97706;">
+                <div class="card-bg-visual card-experience"></div>
+                <div class="card-corners"></div>
+                <div class="portal-icon">🛡️</div>
+                <h2 class="portal-title">職安情境體驗</h2>
+                <p class="portal-desc">沉浸式職安風險體驗。透過虛擬場景辨識潛在危害，學習 ISO45001 與 PDCA 安全防護心法。</p>
+                <div class="portal-btn">啟動虛擬體驗</div>
+            </a>
+
+            <!-- Portal 5: Quiz -->
+            <a href="quiz.html" class="portal-card reveal-up delay-2"
+                style="--hover-color:#a855f7; --btn-color:#9333ea;">
                 <div class="card-bg-visual card-quiz"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🎮</div>
@@ -391,34 +420,48 @@
                 <div class="portal-btn">啟動測驗</div>
             </a>
 
-            <!-- Portal 5: Defensive Driving -->
-            <a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank" class="portal-card reveal-up delay-2" style="--hover-color:#ef4444; --btn-color:#dc2626;">
-                <div class="card-bg-visual card-driving"></div>
+            <!-- Portal 6: Games -->
+            <a href="games.html" class="portal-card reveal-up delay-3"
+                style="--hover-color:#fb923c; --btn-color:#ea580c;">
+                <div class="card-bg-visual card-games"></div>
                 <div class="card-corners"></div>
-                <div class="portal-icon">🚒</div>
-                <h2 class="portal-title">安駕學習網</h2>
-                <p class="portal-desc">提升緊急車輛駕駛安全性，掌握防衛駕駛要領、避讓路權規範與事故預防技術。</p>
-                <div class="portal-btn">前往學習</div>
+                <div class="portal-icon">🎰</div>
+                <h2 class="portal-title">遊戲館</h2>
+                <p class="portal-desc">趣味化教育平台。結合互動遊戲與挑戰，在輕鬆氛圍中潛移默化掌握關鍵戰術知識。</p>
+                <div class="portal-btn">進入遊戲</div>
             </a>
 
-            <!-- Portal 6: Media Library -->
-            <a href="media.html" class="portal-card reveal-up delay-3" style="--hover-color:#ec4899; --btn-color:#db2777;">
+            <!-- Portal 7: Media -->
+            <a href="media.html" class="portal-card reveal-up delay-1"
+                style="--hover-color:#ec4899; --btn-color:#db2777;">
                 <div class="card-bg-visual card-media"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🎙️</div>
-                <h2 class="portal-title">影音戰術館</h2>
-                <p class="portal-desc">集結消防戰術實務、Podcast 深談與生存戰技影音。透過第一視角與專業解析，深入探討火場生存與指揮戰術細節。</p>
+                <h2 class="portal-title">影音展示館</h2>
+                <p class="portal-desc">集結消防戰術實務、Podcast 深談與生存戰技影音。透過專業解析深入探討戰鬥細節。</p>
                 <div class="portal-btn">進入展示館</div>
             </a>
 
-            <!-- Portal 7: Digital Tools -->
-            <a href="tools.html" class="portal-card reveal-up delay-1" style="--hover-color:#06b6d4; --btn-color:#0891b2;">
+            <!-- Portal 8: Tools -->
+            <a href="tools.html" class="portal-card reveal-up delay-2"
+                style="--hover-color:#06b6d4; --btn-color:#0891b2;">
                 <div class="card-bg-visual card-tools"></div>
                 <div class="card-corners"></div>
                 <div class="portal-icon">🧮</div>
-                <h2 class="portal-title">數位戰術工具</h2>
+                <h2 class="portal-title">數位工具</h2>
                 <p class="portal-desc">包含新竹縣消防水源計算機等數位輔助工具，精準支援現場救災與後續分析。</p>
                 <div class="portal-btn">查看工具介紹</div>
+            </a>
+
+            <!-- Portal 9: Driving (External) -->
+            <a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank"
+                class="portal-card reveal-up delay-3" style="--hover-color:#ef4444; --btn-color:#dc2626;">
+                <div class="card-bg-visual card-driving"></div>
+                <div class="card-corners"></div>
+                <div class="portal-icon">🚒</div>
+                <h2 class="portal-title">緊急安駕學習網</h2>
+                <p class="portal-desc">提升緊急車輛駕駛安全性，掌握防衛駕駛要領、避讓路權規範與事故預防技術。</p>
+                <div class="portal-btn">前往學習</div>
             </a>
         </section>
     </main>
@@ -436,13 +479,14 @@
                         <li><a href="index.html">🏠 首頁總覽</a></li>
                         <li><a href="training.html">🔥 前線戰技</a></li>
                         <li><a href="rights.html">⚖️ 三權法規</a></li>
-                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒 安駕學習</a></li>
-                        <li><a href="experience.html">🛡️ 職安體驗</a></li>
                         <li><a href="investigation.html">📋 事故調查</a></li>
+                        <li><a href="experience.html">🛡️ 職安體驗</a></li>
                         <li><a href="quiz.html">🎮 情境測驗</a></li>
                         <li><a href="games.html">🎰 遊戲館</a></li>
                         <li><a href="media.html">🎙️ 影音館</a></li>
                         <li><a href="tools.html">🧮 數位工具</a></li>
+                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒
+                                安駕學習</a></li>
                     </ul>
                 </div>
                 <div>
@@ -467,4 +511,5 @@
     <script src="js/tactical_audio.js"></script>
     <script src="js/progress_tracker.js"></script>
 </body>
+
 </html>

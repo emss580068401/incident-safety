@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>戰術遊戲館 | 事故安全資源網</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>遊戲館 | 事故安全資源網</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         .games-banner {
@@ -31,7 +34,7 @@
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .game-card:hover {
@@ -135,21 +138,35 @@
         }
 
         @keyframes pulse-badge {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
         }
 
         canvas#embers-games {
             position: fixed;
-            inset: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
     </style>
 </head>
-<body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.95)), url('images/bg_rights.png') no-repeat center center fixed; background-size: cover;">
-    
+
+<body class="dark-bg"
+    style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.95)), url('images/bg_rights.png') no-repeat center center fixed; background-size: cover;">
+
     <div class="noise-overlay"></div>
-    <div class="crt-overlay" style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;"></div>
+    <div class="crt-overlay"
+        style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;">
+    </div>
     <canvas id="embers-games"></canvas>
 
     <!-- Navbar -->
@@ -166,13 +183,14 @@
                 <li><a href="index.html">首頁總覽</a></li>
                 <li><a href="training.html">前線戰技</a></li>
                 <li><a href="rights.html">三權法規</a></li>
-                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
-                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="investigation.html">事故調查</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
                 <li><a href="quiz.html">情境測驗</a></li>
-                <li><a href="games.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">遊戲館</a></li>
+                <li><a href="games.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">遊戲館</a>
+                </li>
                 <li><a href="media.html">影音館</a></li>
                 <li><a href="tools.html">數位工具</a></li>
+                <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">安駕學習</a></li>
             </ul>
             <button class="navbar-toggler" id="mobile-menu-btn">
                 <span class="toggler-bar bar1"></span>
@@ -185,7 +203,8 @@
     <main class="container">
         <div class="games-banner reveal-fade">
             <h1 class="split-title" style="margin-bottom: 1rem;">戰術訓練遊戲門戶</h1>
-            <p class="section-desc" style="max-width: 800px; margin: 0 auto;">將複雜的火場戰術與法律風險轉化為互動式的決策體驗。透過遊戲強化反應，提升第一線搶救人員的生存率。</p>
+            <p class="section-desc" style="max-width: 800px; margin: 0 auto;">
+                將複雜的火場戰術與法律風險轉化為互動式的決策體驗。透過遊戲強化反應，提升第一線搶救人員的生存率。</p>
         </div>
 
         <div class="games-grid">
@@ -199,7 +218,8 @@
                     <h2 class="game-title">消防智多星</h2>
                     <p class="game-desc">結合記憶挑戰與專業知識的卡牌競技。透過精確的「戰術卡牌配對消去」，在極速反應中鞏固消防法規、救災器材與現場判斷的核心知識，讓專業化為反射直覺。</p>
                     <div class="game-footer">
-                        <a href="https://emss580068401.github.io/FireSmart-Academy/" target="_blank" class="btn-game">進入記憶挑戰 ➔</a>
+                        <a href="https://emss580068401.github.io/FireSmart-Academy/" target="_blank"
+                            class="btn-game">進入記憶挑戰 ➔</a>
                     </div>
                 </div>
             </div>
@@ -229,8 +249,11 @@
                 </div>
                 <div class="game-content">
                     <h2 class="game-title">火線回憶：第 119 天的約定</h2>
-                    <p class="game-desc">「學長，謝謝你們帶我回家。」一場結合 RIT 搜救戰術與情感渲染的 RPG 旅程。在火場夢境與現實寢室間穿梭，尋找失蹤學弟留下的最後訊息。這不僅是技術訓練，更是對同袍情誼的至高致敬。</p>
-                    <div class="game-meta" style="font-size: 0.9rem; color: #64748b; margin-top: -0.5rem; letter-spacing: 1px;">作者: 峨眉分隊 群仔</div>
+                    <p class="game-desc">「學長，謝謝你們帶我回家。」一場結合 RIT 搜救戰術與情感渲染的 RPG
+                        旅程。在火場夢境與現實寢室間穿梭，尋找失蹤學弟留下的最後訊息。這不僅是技術訓練，更是對同袍情誼的至高致敬。</p>
+                    <div class="game-meta"
+                        style="font-size: 0.9rem; color: #64748b; margin-top: -0.5rem; letter-spacing: 1px;">作者: 峨眉分隊 群仔
+                    </div>
                     <div class="game-footer">
                         <a href="#" class="btn-game btn-disabled">施工中 🚫</a>
                     </div>
@@ -252,7 +275,8 @@
                         <li><a href="index.html">🏠 首頁總覽</a></li>
                         <li><a href="training.html">🔥 前線戰技</a></li>
                         <li><a href="rights.html">⚖️ 三權法規</a></li>
-                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒 安駕學習</a></li>
+                        <li><a href="https://emss580068401.github.io/defensive-driving-training/" target="_blank">🚒
+                                安駕學習</a></li>
                         <li><a href="experience.html">🛡️ 職安體驗</a></li>
                         <li><a href="investigation.html">📋 事故調查</a></li>
                         <li><a href="quiz.html">🎮 情境測驗</a></li>
@@ -284,4 +308,5 @@
         initEmbers('embers-games');
     </script>
 </body>
+
 </html>
