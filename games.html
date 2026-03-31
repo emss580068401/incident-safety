@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>戰術遊戲館 | 事故安全資源網</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .games-banner {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.1), transparent 70%);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-bottom: 6rem;
+        }
+
+        .game-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #38bdf8;
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.3);
+        }
+
+        .game-img-wrapper {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .game-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .game-card:hover .game-img {
+            transform: scale(1.1);
+        }
+
+        .game-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 60%);
+        }
+
+        .game-content {
+            padding: 2.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .game-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
+
+        .game-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .game-footer {
+            margin-top: auto;
+            padding-top: 2rem;
+        }
+
+        .btn-game {
+            display: inline-block;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-game:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.5);
+        }
+
+        .btn-disabled {
+            background: #334155;
+            color: #94a3b8;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .badge-construction {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f59e0b;
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            z-index: 10;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        canvas#embers-games {
+            position: fixed;
+            inset: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+        }
+    </style>
+</head>
+<body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.95)), url('images/bg_rights.png') no-repeat center center fixed; background-size: cover;">
+    
+    <div class="noise-overlay"></div>
+    <div class="crt-overlay" style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;"></div>
+    <canvas id="embers-games"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="icon">🎮</span>
+                <div class="logo-text-group">
+                    <div class="logo-brand">新竹縣政府消防局</div>
+                    <div class="logo-main">戰術遊戲館</div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">首頁總覽</a></li>
+                <li><a href="training.html">前線安全戰技</a></li>
+                <li><a href="rights.html">消防三權與職安</a></li>
+                <li><a href="experience.html">情境體驗</a></li>
+                <li><a href="investigation.html">災害事故調查</a></li>
+                <li><a href="quiz.html">情境測驗</a></li>
+                <li><a href="games.html" style="color:white; border-bottom:2px solid; padding-bottom:0.2rem">遊戲館</a></li>
+            </ul>
+            <button class="navbar-toggler" id="mobile-menu-btn">
+                <span class="toggler-bar bar1"></span>
+                <span class="toggler-bar bar2"></span>
+                <span class="toggler-bar bar3"></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="games-banner reveal-fade">
+            <h1 class="split-title" style="margin-bottom: 1rem;">戰術訓練遊戲門戶</h1>
+            <p class="section-desc" style="max-width: 800px; margin: 0 auto;">將複雜的火場戰術與法律風險轉化為互動式的決策體驗。透過遊戲強化反應，提升第一線搶救人員的生存率。</p>
+        </div>
+
+        <div class="games-grid">
+            <!-- 消防智多星 -->
+            <div class="game-card reveal-up" data-tilt data-tilt-max="5">
+                <div class="game-img-wrapper">
+                    <img src="images/bg_judge.png" alt="消防智多星" class="game-img">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-content">
+                    <h2 class="game-title">消防智多星</h2>
+                    <p class="game-desc">專業消防人員的線上訓練學園。包含各類火場研判、災害調查技巧、法律責任釐清與沉浸式情境模擬測驗，全方位鍛鍊核心職能。</p>
+                    <div class="game-footer">
+                        <a href="https://emss580068401.github.io/FireSmart-Academy/" target="_blank" class="btn-game">進入訓練學園 ➔</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 三國穿越 -->
+            <div class="game-card reveal-up delay-1" data-tilt data-tilt-max="5">
+                <div class="badge-construction">UNDER CONSTRUCTION</div>
+                <div class="game-img-wrapper">
+                    <img src="images/three_kingdoms_fire_teaser_1774918648193.png" alt="三國穿越" class="game-img">
+                    <div class="game-overlay"></div>
+                </div>
+                <div class="game-content">
+                    <h2 class="game-title">穿越三國：夷凌火攻救災</h2>
+                    <p class="game-desc">想過現代消防隊穿越回三國時代嗎？夷凌之戰後，在蜀國過著慢活生活... 等等！當火攻之計再次上演，現代戰術如何破解古代火場？大型戰略生存模擬即將登場。</p>
+                    <div class="game-footer">
+                        <a href="#" class="btn-game btn-disabled">施工中 🚫</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="margin-top: 4rem;">
+        <div class="container" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4rem;">
+            <div class="footer-bottom">
+                <p class="copyright">© 2026 戰術遊戲館 · 新竹縣政府消防局教育平台. All rights reserved.</p>
+                <span class="footer-badge">BETA v1.0</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/effects.js"></script>
+    <script>
+        initEmbers('embers-games');
+    </script>
+</body>
+</html>
