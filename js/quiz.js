@@ -347,6 +347,11 @@ function showScore() {
     const finalScore = Math.round((score / activeQuiz.length) * 100);
     scoreNumber.innerText = finalScore;
 
+    // Record result in progress tracker
+    if (typeof tracker !== 'undefined') {
+        tracker.addQuizResult(finalScore, 100);
+    }
+
     if (score === activeQuiz.length) {
         scoreNumber.style.borderColor = '#10b981';
         scoreNumber.style.color = '#10b981';

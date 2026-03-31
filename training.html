@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>前線安全戰技 | 事故安全資源網</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -232,8 +232,9 @@
     </style>
 </head>
 <body class="dark-bg" style="background: linear-gradient(to bottom, rgba(2, 6, 23, 0.88), rgba(15, 23, 42, 0.95)), url('images/bg_training.png') no-repeat center center fixed; background-size: cover;">
-    <!-- 數位噪點疊加層 -->
+    <!-- 數位噪點與 CRT 疊加層 -->
     <div class="noise-overlay"></div>
+    <div class="crt-overlay" style="position:fixed; inset:0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255,0,0,0.03), rgba(0,255,0,0.01), rgba(0,0,255,0.03)); background-size: 100% 4px, 3px 100%; pointer-events:none; z-index:10001; opacity:0.1;"></div>
     
     <!-- Navbar -->
     <nav class="navbar scrolled">
@@ -264,7 +265,13 @@
     <canvas id="embers-training"></canvas>
 
     <main class="container" style="padding-top: 8rem;">
-        <h1 class="split-title reveal-text text-center" style="margin-bottom: 4rem;">現場安全官四大核心戰技</h1>
+        <h1 class="split-title reveal-text text-center" style="margin-bottom: 2rem;">現場安全官四大核心戰技</h1>
+        
+        <div style="text-align: center; margin-bottom: 4rem;">
+            <a href="https://emss580068401.github.io/incident-safety-officer/" target="_blank" style="display: inline-block; padding: 0.8rem 1.8rem; background: rgba(14, 165, 233, 0.2); border: 1px solid var(--accent-blue-light); color: var(--accent-blue-light); text-decoration: none; border-radius: 8px; font-weight: bold; transition: all 0.3s; box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); font-size: 1.1rem; letter-spacing: 1px;">
+                📘 查閱 現場安全官 (ISO) 手冊全文
+            </a>
+        </div>
         
         <div style="display:flex; justify-content:center; margin-bottom:3rem;">
             <div class="radar-scanner"></div>
@@ -337,6 +344,55 @@
                 @keyframes smoke-fast {
                     0% { transform: scale(1) translateY(0); filter: blur(5px); }
                     100% { transform: scale(2) translateY(-80px) rotate(20deg); filter: blur(15px); opacity: 0.3; }
+                }
+
+                .vvdc-result {
+                    margin-top: 2rem;
+                    padding: 1.5rem;
+                    background: rgba(15, 23, 42, 0.8);
+                    border: 1px solid var(--border-glass);
+                    border-radius: 12px;
+                    min-height: 100px;
+                    text-align: center;
+                    color: var(--accent-blue-light);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                    position: relative;
+                    overflow: hidden;
+                }
+                .vvdc-img-frame {
+                    position: relative;
+                    margin-bottom: 1.5rem;
+                    border: 2px solid rgba(234, 88, 12, 0.3);
+                    border-radius: 12px;
+                    overflow: hidden;
+                    background: #000;
+                    box-shadow: 0 0 20px rgba(234, 88, 12, 0.2);
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+                .vvdc-img-frame:hover {
+                    border-color: var(--accent-fire-light);
+                    box-shadow: 0 0 30px rgba(234, 88, 12, 0.4);
+                    transform: scale(1.02);
+                }
+                .vvdc-img-frame::after {
+                    content: 'VIEW ORIGINAL';
+                    position: absolute;
+                    bottom: 10px;
+                    right: 10px;
+                    font-size: 0.7rem;
+                    color: white;
+                    background: rgba(0,0,0,0.6);
+                    padding: 2px 8px;
+                    border-radius: 4px;
+                    opacity: 0.6;
+                    pointer-events: none;
+                }
+                .vvdc-analysis-img {
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    object-fit: cover;
                 }
             </style>
 
@@ -417,6 +473,7 @@
             <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
+            <img src="images/structural_damage.png" alt="建築結構損害徵兆" style="width:100%; max-height: 220px; object-fit: cover; border-radius:8px; margin-bottom: 1.5rem; border: 2px solid rgba(56, 189, 248, 0.4); box-shadow: 0 0 20px rgba(0,0,0,0.5);">
             <p>這是建築物主結構受高溫破壞、即將失去承載力的視覺警告。當觀察到此現象時，安全官須立即行使中止權，下令所有內部人員撤出。</p>
         </div>
     </div>
@@ -437,8 +494,13 @@
             <button class="modal-close">&times;</button>
         </div>
         <div class="modal-body">
-            <img src="images/rit_tactical.png" alt="RIT 戰鬥裝備小組" style="width:100%; max-height: 220px; object-fit: cover; border-radius:8px; margin-bottom: 1.5rem; border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 0 15px rgba(239,68,68,0.2);">
+            <img src="images/rit_taiwan.png" alt="新竹縣政府消防局 RIT 救援小組" style="width:100%; max-height: 220px; object-fit: cover; border-radius:8px; margin-bottom: 1.5rem; border: 1px solid rgba(239,68,68,0.3); box-shadow: 0 0 15px rgba(239,68,68,0.2);">
             <p>Rapid Intervention Team。這支隊伍不參與一般滅火，而是滿載專門救援裝備，在場外隨時待命，唯一目標就是在那最關鍵的時刻衝進火場，把受困的弟兄救出來。</p>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <a href="https://emss580068401.github.io/rit-tactical-manual/" target="_blank" style="display: inline-block; padding: 0.8rem 1.5rem; background: rgba(239,68,68,0.2); border: 1px solid #ef4444; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; transition: all 0.3s; box-shadow: 0 0 10px rgba(239,68,68,0.3); font-size: 0.95rem;">
+                    📖 查閱 RIT 戰術手冊全文
+                </a>
+            </div>
         </div>
     </div>
 
@@ -455,6 +517,10 @@
             <strong>N</strong> - Name (姓名)<br>
             <strong>A</strong> - Assignment (原定任務與空氣量)<br>
             <strong>R</strong> - Resources needed (救援所需資源/受困狀況)</p>
+            <p style="margin-top:1rem; padding:1rem; background:rgba(245,158,11,0.1); border-left:4px solid #f59e0b; border-radius:0 8px 8px 0; color:var(--text-secondary); line-height:1.6; font-size:0.95rem;">
+            <strong>實務配合行動準則：</strong><br>
+            這套原則通常與確認空氣剩餘量（Gauge）、啟動救命器（Activate）、控制呼吸（Control Breathing）、保持低姿勢（Stay Low）、利用照明（Illuminate）、製造聲響（Volume）等行動配合執行。
+            </p>
         </div>
     </div>
 
@@ -628,23 +694,40 @@
             
             // Dynamic Image Logic
             const imgSrc = `images/vvdc_${colorClass}_${speedClass}.png`;
-            const imgHTML = `<img src="${imgSrc}" style="width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; border: 1px solid rgba(255,255,255,0.2);">`;
+            const imgHTML = `
+                <div class="vvdc-img-frame" onclick="openLightbox('${imgSrc}', '${resultText}')">
+                    <img id="vvdc-analysis-img" src="${imgSrc}" class="vvdc-analysis-img" alt="戰術分析影像">
+                </div>
+            `;
 
             // Text & Image Injection
             resultBox.innerHTML = `${imgHTML}<strong>研判結果：</strong><br><br>${resultText}`;
             resultBox.style.color = '#fff';
             
             if(colorClass === 'black' && speedClass === 'fast') {
-                resultBox.innerHTML += '<br><br><span style="color:#ef4444; font-weight:bold;">⚠️閃燃前兆！立即撤出！</span>';
+                resultBox.innerHTML += '<br><br><span style="color:#ef4444; font-weight:bold; border: 1px solid #ef4444; padding: 0.5rem; display: inline-block; border-radius: 4px; background: rgba(239,68,68,0.1);">⚠️ 閃燃前兆！立即撤出！</span>';
                 resultBox.style.borderColor = '#ef4444';
-                resultBox.style.background = 'rgba(239, 68, 68, 0.2)';
+                resultBox.style.background = 'rgba(239, 68, 68, 0.15)';
             } else if (colorClass === 'brown') {
                 resultBox.innerHTML += '<br><br><span style="color:#f59e0b;">木造結構/裝潢建材悶燒中，留意結構破壞。</span>';
                 resultBox.style.borderColor = '#f59e0b';
-                resultBox.style.background = 'rgba(245, 158, 11, 0.2)';
+                resultBox.style.background = 'rgba(245, 158, 11, 0.15)';
             } else {
                 resultBox.style.borderColor = 'rgba(255,255,255,0.1)';
-                resultBox.style.background = 'rgba(0,0,0,0.4)';
+                resultBox.style.background = 'rgba(15, 23, 42, 0.8)';
+            }
+        }
+
+        // Helper function for Lightbox
+        function openLightbox(src, title) {
+            const lightboxModal = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            
+            if (lightboxModal && lightboxImg) {
+                lightboxImg.src = src;
+                if (lightboxCaption) lightboxCaption.innerText = title || '戰術火煙分析結果';
+                lightboxModal.classList.add('active');
             }
         }
 
@@ -749,32 +832,20 @@
     </div>
 
     <script>
-        // Lightbox Logic for VVDC analysis-img
-        const vvdcAnalysisImg = document.getElementById('vvdc-analysis-img');
+        // Close lightbox when clicking the specific close button or the overlay
         const lightboxModal = document.getElementById('lightbox-modal');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxCaption = document.getElementById('lightbox-caption');
-
-        if (vvdcAnalysisImg) {
-            vvdcAnalysisImg.style.cursor = 'pointer';
-            vvdcAnalysisImg.title = '點擊查看原圖';
-            
-            vvdcAnalysisImg.addEventListener('click', () => {
-                if (vvdcAnalysisImg.src && !vvdcAnalysisImg.src.includes('placeholder')) {
-                    lightboxImg.src = vvdcAnalysisImg.src;
-                    lightboxCaption.innerText = document.getElementById('vvdc-result-title')?.innerText || '戰術火煙分析結果';
-                    lightboxModal.classList.add('active');
+        if (lightboxModal) {
+            lightboxModal.addEventListener('click', (e) => {
+                if (e.target.id === 'lightbox-modal' || e.target.classList.contains('modal-close')) {
+                    lightboxModal.classList.remove('active');
                 }
             });
         }
-
-        // Close lightbox when clicking the specific close button or the overlay
-        lightboxModal.addEventListener('click', (e) => {
-            if (e.target.id === 'lightbox-modal' || e.target.classList.contains('modal-close')) {
-                lightboxModal.classList.remove('active');
-            }
-        });
     </script>
+    <script src="js/app.js"></script>
+    <script src="js/tactical_audio.js"></script>
+    <script src="js/progress_tracker.js"></script>
+    <script src="js/effects.js"></script>
 </body>
 </html>
 
