@@ -275,6 +275,42 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', triggerAudio);
     document.addEventListener('touchstart', triggerAudio, {passive: true});
 
+    // 7. 手機版翻轉卡片 - 改為點擊觸發（hover 在觸控設備無效）
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    if (isTouchDevice) {
+        // 關閉掃描線動畫，節省手機渲染資源
+        const scanStyle = document.createElement('style');
+        scanStyle.textContent = `
+            body::after { animation: none !important; opacity: 0 !important; }
+            .noise-overlay { display: none; }
+        `;
+        document.head.appendChild(scanStyle);
+
+        // 翻轉卡片改為點擊觸發
+        const flipCards = document.querySelectorAll('.flip-card');
+        flipCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const inner = card.querySelector('.flip-card-inner');
+                if (!inner) return;
+                const isFlipped = inner.style.transform === 'rotateY(180deg)';
+                inner.style.transform = isFlipped ? '' : 'rotateY(180deg)';
+            });
+        });
+
+        // 移除 hover 產生的卡片上移效果，改以 active 狀態取代
+        const glassCards = document.querySelectorAll('.glass-card, .timeline-content');
+        glassCards.forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.transition = 'transform 0.2s ease';
+            }, { passive: true });
+            card.addEventListener('touchend', () => {
+                setTimeout(() => { card.style.transform = ''; }, 300);
+            }, { passive: true });
+        });
+    }
+
     // 全局行動端選單控制 (漢堡按鈕)
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileNavLinks = document.querySelector('.nav-links');

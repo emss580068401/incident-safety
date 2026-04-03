@@ -860,9 +860,10 @@ a {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
+}
 
 /* =========================================================================
-   新增：法規與教材區塊樣式 (Regulations)
+   法規與教材區塊樣式 (Regulations)
    ========================================================================= */
 
 .resource-grid {
@@ -932,7 +933,7 @@ a {
 .r-link:hover {
     gap: 0.8rem;
     color: white;
-}}
+}
 
 .tab-buttons {
     display: flex;
@@ -1186,12 +1187,24 @@ footer {
     }
 }
 
-/* Responsive Design */
+/* =========================================================================
+   Responsive Design — 手機與平板優化
+   ========================================================================= */
+
+/* --- 平板斷點 (900px) --- */
 @media (max-width: 900px) {
     .vs-badge { margin: 1.5rem 0; width: 50px; height: 50px; font-size: 1.1rem; }
     .case-grid { grid-template-columns: 1fr; gap: 2rem; }
     .case-image { height: 250px; }
-    
+
+    /* 容器水平 padding 縮小 */
+    .container { padding: 0 1.25rem; }
+    .section { padding: 4rem 0; }
+
+    /* 節標題調整 */
+    .section-title { font-size: 1.9rem; }
+    .section-desc { font-size: 1rem; margin-bottom: 2.5rem; }
+
     /* 漢堡選單觸發時的 nav-links 樣式 (全螢幕覆蓋) */
     .nav-links {
         position: fixed;
@@ -1203,13 +1216,15 @@ footer {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 3rem;
+        gap: 2rem;
         z-index: 2000;
         transform: translateY(-100%);
         opacity: 0;
         visibility: hidden;
         transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         padding: 2rem;
+        /* 允許選單內垂直滾動，避免超長選單截斷 */
+        overflow-y: auto;
     }
 
     .nav-links.active {
@@ -1219,26 +1234,37 @@ footer {
     }
 
     .nav-links li a {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: 700;
+        /* 確保觸控目標夠大 (WCAG 建議最小 44px) */
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.5rem;
     }
 
+    /* 漢堡按鈕 */
     .navbar-toggler {
-        display: block !important;
+        display: flex !important;
         position: relative;
         z-index: 2001;
         background: none;
         border: none;
         cursor: pointer;
-        width: 30px;
-        height: 24px;
-        display: flex;
+        width: 36px;
+        height: 28px;
         flex-direction: column;
         justify-content: space-between;
+        padding: 2px 0;
+        /* 增加可點擊面積 */
+        min-width: 44px;
+        min-height: 44px;
+        align-items: center;
     }
 
     .toggler-bar {
-        width: 100%;
+        width: 28px;
         height: 3px;
         background: white;
         border-radius: 4px;
@@ -1249,17 +1275,90 @@ footer {
     .navbar-toggler.active .bar1 { transform: rotate(45deg) translate(7px, 7px); }
     .navbar-toggler.active .bar2 { opacity: 0; }
     .navbar-toggler.active .bar3 { transform: rotate(-45deg) translate(7px, -7px); }
+
+    /* Logo 手機版縮小 */
+    .logo-main { font-size: 1.1rem; }
+    .logo-brand { font-size: 0.7rem; }
+    .navbar { padding: 0.9rem 0; }
+    .navbar.scrolled { padding: 0.75rem 0; }
+    .nav-container { padding: 0 1rem; }
+
+    /* 翻轉卡片：手機改為點擊觸發 */
+    .flip-card { width: 100%; max-width: 380px; height: 420px; }
+    .flip-card-back li { font-size: 1rem; }
 }
 
+/* --- 手機斷點 (600px) --- */
 @media (max-width: 600px) {
+    /* 基礎字體 */
     body { font-size: 15px; }
     h1 { font-size: 1.8rem !important; }
     h2 { font-size: 1.4rem !important; }
     .hero h1 { font-size: 1.8rem !important; }
     .subtitle { font-size: 0.95rem !important; }
-    .tab-btn { padding: 0.8rem; font-size: 0.9rem; }
+
+    /* Tab 元件 */
+    .tab-btn { padding: 0.8rem; font-size: 0.85rem; }
     .tab-content { padding: 1.5rem 1rem; }
-    .section { padding: 2rem 0; }
+    .section { padding: 2.5rem 0; }
+
+    /* Hero Portal 手機優化 */
+    .hero-portal {
+        min-height: 50vh;
+        padding-top: 5rem;
+        padding-bottom: 1rem;
+    }
+
+    /* 儀表板縮小 */
+    .dashboard-container {
+        margin: -1rem 1rem 2rem;
+        padding: 1.25rem;
+    }
+    .stat-value { font-size: 1.5rem; }
+    .progress-stats { gap: 1rem; }
+
+    /* 翻轉卡片：手機全寬 */
+    .flip-card { width: 100%; max-width: none; height: 380px; }
+    .comparison-grid { gap: 1.5rem; }
+    .vs-badge { display: none; } /* 手機版隱藏 VS 徽章，節省空間 */
+
+    /* Timeline */
+    .timeline-content { padding: 1.25rem; }
+    .timeline-item { padding-left: 60px; }
+
+    /* 底部音訊按鈕避免遮蓋頁面元素 */
+    .audio-btn {
+        bottom: 16px;
+        right: 16px;
+        width: 48px;
+        height: 48px;
+    }
+
+    /* 模態視窗全螢幕優化 */
+    .modal-container {
+        width: 95%;
+        max-width: none;
+        border-radius: 12px;
+    }
+    .modal-body { padding: 1.25rem; font-size: 0.95rem; }
+    .modal-header { padding: 1rem 1.25rem; }
+
+    /* 資源卡不需要 hover 上移效果（觸控無 hover） */
+    .resource-card:hover { transform: none; }
+    .glass-card:hover { transform: none; }
+    .portal-card:hover { transform: none; }
+    .ob-card.hover-glow:hover { transform: none; }
+
+    /* Footer 間距 */
+    footer { padding: 2.5rem 0 1.5rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+/* --- 極小螢幕 (375px) --- */
+@media (max-width: 375px) {
+    h1 { font-size: 1.5rem !important; }
+    .logo-main { font-size: 0.95rem; }
+    .logo-brand { display: none; }
 }
 
 /* =========================================================================
