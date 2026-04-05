@@ -1,0 +1,833 @@
+--- Page 1 ---
+01
+( )
+97
+--- Page 2 ---
+3
+-1
+104.01.20
+(Entry control System)
+( )
+4
+107.04.28
+(size-up)
+( )
+MAYDAY ( RIT )
+MAYDAY ( )
+-2
+98
+--- Page 3 ---
+5
+119
+-3
+( )
+( )( )
+6
+( )
+99
+--- Page 4 ---
+1)
+2)
+3)
+1)
+2)
+3)
+4)
+1)
+2)
+3)
+4)
+(
+)
+5)
+1)
+2)
+3)
+1)
+2)
+3)
+4)
+(SOG)
+7
+8
+-12
+ CCIO
+1 0 7
+100
+--- Page 5 ---
+9
+10
+101
+--- Page 6 ---
+111/8/11
+1. /
+2.
+3.
+1. (
+)
+2. (115/1/1)
+1.
+2. /REHAB/RIT
+3.
+113 - 11
+102
+--- Page 7 ---
+3~7
+1.
+2. OODA
+3.
+1. ICS
+2. CCIO
+3.
+1.
+2.
+1.
+2.
+1.
+2.
+3.
+1. NIMS
+2. Planning P
+Operation O
+3. INSARAG
+113 - 13
+113 - 14
+103
+--- Page 8 ---
+Life Safety Incident Stabilization Property Conservation
+113 - 15
+( 1-5)
+1
+2
+3
+4
+5
+6
+7
+(size-up)
+113 - 16
+104
+--- Page 9 ---
+-
+113 - 17
+105
+--- Page 10 ---
+19
+4
+3 ( )
+2
+1
+Q1 ( )
+Q2 ( ?)
+1. ( )
+2.
+3.
+4.
+5. RIT
+6.
+RIT
+ ISO
+20
+106
+--- Page 11 ---
+A
+21
++
+22
+RIT
+Mayday
+(L U N A R )
+107
+--- Page 12 ---
+MAYDAY
+Location 
+Unit        
+Name     
+Air           
+Assignment
+Resources    
+-
+23
+---- !
+24
+108
+--- Page 13 ---
+(AIRBAG FASTBOARD)
+25
+Personnel Accountability System Entry control System
+113 - 26
+109
+--- Page 14 ---
+1. ?
+ 2. ?
+ 3. ?
+ 4. ( )?
+?
+113 - 27
+Personnel Accountability System  - Check In / Out
+28
+110
+--- Page 15 ---
+29
+1 101
+3
+1. 2.
+113 - 30
+111
+--- Page 16 ---
+( ) ( )3
+113 - 31
+( )
+1
+1 2 3 4
+113 - 32
+112
+--- Page 17 ---
+A
+A-1
+A-2
+A
+A-1
+A-2
+B
+C
+A
+A-1
+A-2
+B
+C
+A B
+C
+D
+E
+113 - 33
+1. ( )
+2.
+3. (
+)
+4.
+5.
+1.
+2.
+3. ( / )
+4.
+5.
+6.
+113 - 34
+113
+--- Page 18 ---
+RIT
+? ? ?
+1
+2
+3
+113 - 35
+1
+2
+3
+( ) ( ) ( ) ( )
+/
+10
+2
+113 - 36
+114
+--- Page 19 ---
+(IC)
+RIT
+10
+2
+( ) ( ) ( ) ( )
+113 - 37
+Personnel Accountability System  - Entry Control 
+38
+115
+--- Page 20 ---
+1.
+2.
+3.
+4.
+5.
+6. ( )
+111 8 11
+?
+113 - 39
+?
+1.
+2.
+(TWA )
+3.
+4.
+113 - 40
+116
+--- Page 21 ---
+41
+1
+ 2
+ 3
+ 4
+5
+ 6
+0900 250bar 3
+0910 150bar 0908  
+-
+1.
+2.
+3.
+1.
+2.
+3.
+4.
+113 - 42
+117
+--- Page 22 ---
+C A N Report & Personnel Accountability Report (PAR)
+/ /
+/ ( / )
+10 bar/min
+113 - 43
+44
+118
+--- Page 23 ---
+45
+46
+( )
+1 2 3 4
+/
+119
+--- Page 24 ---
+47
+107/08/07
+H Hazard identification
+A Action plan
+Z Zoning
+M Managing the incident
+A Assistance
+T Termination
+113 - 48
+120
+--- Page 25 ---
+49
+113 - 50
+121
+--- Page 26 ---
+RIT
+113 - 51
+113 - 52
+122
+--- Page 27 ---
+111 8 11
+113 - 53
+111.8.11
+v.s ?
+1
+3 115 1 1
+113 - 54
+123
+--- Page 28 ---
+ISO
+M . E . D . I . C
+01 Monitor
+02 Evaluate
+03 Develop
+04 Interventions
+06 Mayday RIT
+05 Communicate
+07
+113 - 55
+M.E.D.I.C
+Monitor Evaluate
+( )
+Develop Interventions Communicate
+Free Lancing 
+REHAB
+113 - 56
+124
+--- Page 29 ---
+360 RECON
+RIT
+360 RECON
+Mayday 
+RIT
+RIT
+M.E.D.I.C
+113 - 57
+113 - 58
+125
+--- Page 30 ---
+113 - 59
+/
+1 111
+2 100
+60
+126
+--- Page 31 ---
+02
+127
+--- Page 32 ---
+( )
+113 - 63
+64
+BLS
+113 -
+128
+--- Page 33 ---
+65
+ 65
+/
+/
+1+1>2
+NFPA1584
+(R.E.H.A.B)
+Rest( )
+Energy nutrition( )
+Hydration( )
+Accommodation for weather( )
+BLS monitoring and care(BLS )
+1 2
+2 2
+3 1
+4 1
+5 1
+6 AED1
++
+1 1
+2 1
+(1)
+(2)
+(3) IC
+1 1
+2 2
+3 EMT 2
+4
+66
+129
+--- Page 34 ---
+(REHAB)
+/
+( )
+PPE
+/ /
+(REHAB )
+/ / /
+/
+1
+2
+3 4
+5 1
+2
+3
+6
+67113 -
+(REHAB)
+(REHAB )
+/ / /
+/
+68
+/
+( )
+20min
+5min 1
+113 -
+130
+--- Page 35 ---
+REHAB
+1. (Rest) 20 2. (Energy nutrition)
+3. (Hydration) 4. (Accommodation for weather ) 
+5.BLS (BLS monitoring and care)
+20 2 ~3
+15~20
+120ml~240ml
+113 - 69
+BLS (BLS monitoring and care)
+NFPA1584 100mmHg( )
+39
+(1L)
+95%-100% SpCO(15%)
+113 - 70
+131
+--- Page 36 ---
+71
+1.
+? ?
+2. ?
+3. ?
+4. ?
+5. ?
+6. ?
+-
+72
+132
+--- Page 37 ---
+73
+03
+133
+--- Page 38 ---
+75
+( )
+( )
+( )
+( APP )
+SAFETY
+-
+1.5kg $16k
+0.1kg $12k
+12kg $60k
+3.8kg $45k
+0.7kg $12k
+1.5kg $15k
+0.2kg $5k
+0.5kg $5k
+3kg $6k
+Total 23.3kg $176k
+134
+--- Page 39 ---
+77
+SCBA
+>100bar
+60~100bar
+<60bar
+1
+1 (200bar)
+2 (100bar)
+(<60bar)
+(30 35 40S)
+(1.5m)
+3
+30
+1
+78
+1.
+2.
+3.
+135
+--- Page 40 ---
+79
+Personnel Accountability System Entry control System
+80
+136
+--- Page 41 ---
+81
+1 101
+3
+82
+1.
+2.
+3.
+4.
+5.
+6. ( )
+111 8 11
+137
+--- Page 42 ---
+-1
+->     ->    
+83
+-2
+->   ->    
+84
+138
+--- Page 43 ---
+-3
+/ -> RIT ->    
+85
+86
+139
+--- Page 44 ---
+88
+-
+140
+--- Page 45 ---
+?
+01
+?
+?
+05
+?
+?
+02
+?
+04
+MAYDAY?
+?
+?
+03
+?
+BAR
+89
+141
+--- Page 46 ---
+91
+95%
+92
+142
+--- Page 47 ---
+93
++
+(
+ )
+GOOGLE
+(
+ )
+94
+143
+--- Page 48 ---
+-
+ (
+ )
+96
+144
+--- Page 49 ---
+-
+ (
+ )
++
+97
+98
+&
+PASSKEY 
+PAR SCBA
+SCBA -
+SCBA -
+-1
+G
+MAYDAY*3
+Mayday call(LUNAR)
+-2
+A
+B
+L
+I
+V
+E
+-
+S
+PASS KEY
+(
+ ) (
+ )
+ 2-3 ( )
+145
+--- Page 50 ---
+99
+&
+PASSKEY 
+10min
+150BAR
+(PAR)
+SCBA
+SCBA
+Mayday call(LUNAR)
+RIT
+PASS
+(
+ )(
+ )
+ 3~4 ( )
+100
+146
+--- Page 51 ---
+101
+102
+147
+--- Page 52 ---
+103
+/ EMIC
+104
+148
+--- Page 53 ---
+105
+105
+/
+/LUF60 3000 
+L/min 4.5 km/h 30 4 /
+/RTE 
+ROBOT 
+RM35
+3800 
+L/min 6 km/h 35
+/Brokk 
+120D II
+3800 
+L/min 3 km/h 30 3 /
+/FRT-
+508E
+2900 
+L/min 3.2km/h 35
+/
+ID-robots-S
+2800 
+L/min 5.4 km/h 40
+106
+149
+--- Page 54 ---
+107
+108
+150
+--- Page 55 ---
+Before
+ After 109
+-
+80m
+6
+110
+-
+151
+--- Page 56 ---
+2
+111
+-
+10
+112
+-
+152
+--- Page 57 ---
+113
+( )
+ 114
+153
+--- Page 58 ---
+115
+23116
+154
+--- Page 59 ---
+AI
+-
+AI
+AI
+117
+118
+155
+--- Page 60 ---
+5G
+5G AI
+0403
+0403
+3D
+119
+(1/2)
++
+(Mesh Wifi)+
+120
+156
+--- Page 61 ---
+(2/2)
++
+121
+63%
+750
+72
+84
+69
+88
+54
+78
+13
+37
+28
+22
+11 12
+54
+18 18
+9 12
+46
+11 7 6 1
+122
+157
+--- Page 62 ---
+-
+112
+261
+34
+113
+88
+88
+( )
+72
+33
+114 -
+118
+305
+161
+AI
+-
+123
+RIT
+RIT
+PAR
+RIT
+124
+158
+--- Page 63 ---
+125
+126
+159
+--- Page 64 ---
+()
+127
+128
+160
+--- Page 65 ---
+-
+1
+ -
+2
+129
+-
+( )
+130
+161
+--- Page 66 ---
+131
+( )
+( )
+( )
+( )
+( )
+( )
+( )
+132
+H-CARD
+OpenAPI , ( )
+GIS
+162
+--- Page 67 ---
+133
+107.4.13 1070600110
+107 116
+1 1
+1
+134
+(
+)
+(
+)
+163
+--- Page 68 ---
+135
+1 ( )
+( )
+136
+H-CARD
+H-Card
+30
+ 119
+164
+--- Page 69 ---
+137
+-
+-
+ -
+1. -
+2. -
+3. -
+138
+165
+--- Page 70 ---
+139
+140
+https://d2myx53yhj7u4b.cloudfront.net/sites/default/files/IC-deming-PDCA-cycle.jpg
+166
+--- Page 71 ---
+[No text on this page]
+--- Page 72 ---
+[No text on this page]
