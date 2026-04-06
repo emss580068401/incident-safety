@@ -110,7 +110,7 @@ const quizDataBank = [
     },
     {
         scenario: "為了阻止風向將大火吹往後方的整排連棟木造民房，指揮官決定請台電強制斷電。",
-        question: "這是指揮官的哪一項權責？",
+        question: "這是指揮官的哪一項權職？",
         options: ["緊急處置權", "截斷能源權", "連帶賠償權"],
         correctAnswer: 1,
         feedbackCorrect: "正確。必要時得通知事業機構截斷電源或瓦斯，即為「截斷能源權」。",
@@ -207,10 +207,10 @@ const quizDataBank = [
     }
 ];
 
-//  Fisher-Yates 洗牌演算法 (Shuffle)
+// Fisher-Yates 洗牌演算法 (Shuffle)
 function shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-    while (currentIndex != 0) {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
@@ -218,13 +218,16 @@ function shuffle(array) {
     return array;
 }
 
-const QUIZ_LENGTH = 5; // 每次隨機抽取 5 題
+// 支援外部覆寫題數，預設 5 題
+const QUIZ_LENGTH = window.QUIZ_LENGTH || 5;
+
 let activeQuiz = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let isAnswered = false;
-let answeredLog = []; // ← 記錄每題作答情況，供解析面板使用
+let answeredLog = []; 
 
+// DOM 元素快取
 const questionCounter = document.getElementById('question-counter');
 const progressBar = document.getElementById('progress-bar');
 const scenarioText = document.getElementById('scenario-text');
@@ -241,38 +244,52 @@ const scoreNumber = document.getElementById('score-number');
 const scoreTitle = document.getElementById('score-title');
 const scoreDesc = document.getElementById('score-desc');
 
+/**
+ * 初始化測驗
+ */
 function initQuiz() {
     activeQuiz = shuffle([...quizDataBank]).slice(0, QUIZ_LENGTH);
     currentQuestionIndex = 0;
     score = 0;
-    answeredLog = []; // ← 清空記錄
+    answeredLog = [];
     loadQuestion();
 }
 
+/**
+ * 載入題目
+ */
 function loadQuestion() {
     isAnswered = false;
     const currentQuizData = activeQuiz[currentQuestionIndex];
     
-    questionCounter.innerText = `Question ${currentQuestionIndex + 1} / ${activeQuiz.length}`;
-    progressBar.style.width = `${((currentQuestionIndex) / activeQuiz.length) * 100}%`;
+    if (questionCounter) questionCounter.innerText = `Question ${currentQuestionIndex + 1} / ${activeQuiz.length}`;
+    if (progressBar) progressBar.style.width = `${((currentQuestionIndex) / activeQuiz.length) * 100}%`;
     
-    scenarioText.innerText = currentQuizData.scenario;
-    questionText.innerText = currentQuizData.question;
-    optionsGrid.innerHTML = '';
+    if (scenarioText) scenarioText.innerText = currentQuizData.scenario;
+    if (questionText) questionText.innerText = currentQuizData.question;
+    if (optionsGrid) optionsGrid.innerHTML = '';
     
-    feedbackBox.className = 'feedback-box';
-    nextBtn.style.display = 'none';
-    nextBtn.innerText = '進入下一題 ➡️';
+    if (feedbackBox) feedbackBox.className = 'feedback-box';
+    if (nextBtn) {
+        nextBtn.style.display = 'none';
+        nextBtn.innerText = '進入下一題 ➡️';
+    }
 
+    // 生成選項按鈕
     currentQuizData.options.forEach((option, index) => {
         const button = document.createElement('button');
         button.innerText = option;
         button.classList.add('option-btn');
+        // [UPDATE]: 加上 data-tactical 屬性，交由全域音效引擎接管 Hover/Mousedown 音效
+        button.setAttribute('data-tactical', 'true');
         button.addEventListener('click', () => selectAnswer(index));
-        optionsGrid.appendChild(button);
+        if (optionsGrid) optionsGrid.appendChild(button);
     });
 }
 
+/**
+ * 選擇答案處理
+ */
 function selectAnswer(selectedIndex) {
     if (isAnswered) return;
     isAnswered = true;
@@ -291,28 +308,36 @@ function selectAnswer(selectedIndex) {
         }
     });
 
-    feedbackBox.classList.add('show');
+    if (feedbackBox) feedbackBox.classList.add('show');
 
     if (isCorrect) {
         score++;
-        feedbackBox.classList.add('correct-fb');
-        feedbackTitle.innerText = "⭐ 專業決策！";
-        feedbackContent.innerText = currentQuizData.feedbackCorrect;
-        if (typeof window.onQuizCorrect === 'function') {
-            window.onQuizCorrect(optionBtns[selectedIndex]);
+        if (feedbackBox) {
+            feedbackBox.classList.add('correct-fb');
+            if (feedbackTitle) feedbackTitle.innerText = "⭐ 專業決策！";
+            if (feedbackContent) feedbackContent.innerText = currentQuizData.feedbackCorrect;
+        }
+        
+        // --- [音效觸發]: 正確 ---
+        if (typeof audioEngine !== 'undefined' && audioEngine.enabled) {
+            audioEngine.playSuccess();
         }
     } else {
-        feedbackBox.classList.add('wrong-fb');
-        feedbackTitle.innerText = "⚠️ 決策失誤";
-        feedbackContent.innerText = currentQuizData.feedbackWrong;
-        if (typeof window.onQuizWrong === 'function') {
-            window.onQuizWrong();
+        if (feedbackBox) {
+            feedbackBox.classList.add('wrong-fb');
+            if (feedbackTitle) feedbackTitle.innerText = "⚠️ 決策失誤";
+            if (feedbackContent) feedbackContent.innerText = currentQuizData.feedbackWrong;
+        }
+        
+        // --- [音效觸發]: 錯誤 ---
+        if (typeof audioEngine !== 'undefined' && audioEngine.enabled) {
+            audioEngine.playAlert();
         }
     }
 
-    progressBar.style.width = `${((currentQuestionIndex + 1) / activeQuiz.length) * 100}%`;
+    if (progressBar) progressBar.style.width = `${((currentQuestionIndex + 1) / activeQuiz.length) * 100}%`;
 
-    // 記錄作答
+    // 記錄作答情況
     answeredLog.push({
         question: currentQuizData.question,
         scenario: currentQuizData.scenario,
@@ -323,59 +348,66 @@ function selectAnswer(selectedIndex) {
         feedbackCorrect: currentQuizData.feedbackCorrect
     });
 
-    nextBtn.style.display = 'block';
-    
-    if (currentQuestionIndex === activeQuiz.length - 1) {
-        nextBtn.innerText = '查看安全評估結果 ➡️';
+    if (nextBtn) {
+        nextBtn.style.display = 'block';
+        if (currentQuestionIndex === activeQuiz.length - 1) {
+            nextBtn.innerText = '查看安全評估結果 ➡️';
+        }
     }
 }
 
-nextBtn.addEventListener('click', () => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < activeQuiz.length) {
-        loadQuestion();
-    } else {
-        showScore();
-    }
-});
+if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < activeQuiz.length) {
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    });
+}
 
+/**
+ * 結算畫面渲染
+ */
 function showScore() {
-    quizUI.style.display = 'none';
-    scoreScreen.classList.add('active');
+    if (quizUI) quizUI.style.display = 'none';
+    if (scoreScreen) scoreScreen.classList.add('active');
     
-    // Calculate final score base 100
     const finalScore = Math.round((score / activeQuiz.length) * 100);
-    scoreNumber.innerText = finalScore;
+    if (scoreNumber) scoreNumber.innerText = finalScore;
 
-    // Record result in progress tracker
     if (typeof tracker !== 'undefined') {
         tracker.addQuizResult(finalScore, 100);
     }
 
+    // 更新評語風格
     if (score === activeQuiz.length) {
-        scoreNumber.style.borderColor = '#10b981';
-        scoreNumber.style.color = '#10b981';
-        scoreNumber.style.background = 'radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%)';
-        scoreTitle.innerText = "🏆 卓越決策者";
-        scoreDesc.innerText = "5 題特考全對！您對消防法規、退避決策與現場安全評估具備了極高的實踐能力。";
+        if (scoreNumber) {
+            scoreNumber.style.borderColor = '#10b981';
+            scoreNumber.style.color = '#10b981';
+        }
+        if (scoreTitle) scoreTitle.innerText = "🏆 卓越決策者";
+        if (scoreDesc) scoreDesc.innerText = "5 題特考全對！您已達到最高等級的安全官標準。";
     } else if (score >= activeQuiz.length / 2) {
-        scoreNumber.style.borderColor = '#f59e0b';
-        scoreNumber.style.color = '#f59e0b';
-        scoreNumber.style.background = 'radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%)';
-        scoreTitle.innerText = "🛡️ 合格安全官";
-        scoreDesc.innerText = "您具備不錯的安全意識，但部分法規判定 (H-Card、6大情境) 仍可多加精進。";
+        if (scoreNumber) {
+            scoreNumber.style.borderColor = '#f59e0b';
+            scoreNumber.style.color = '#f59e0b';
+        }
+        if (scoreTitle) scoreTitle.innerText = "🛡️ 合格安全官";
+        if (scoreDesc) scoreDesc.innerText = "基礎穩固，部分法規細節建議再加強。";
     } else {
-        scoreNumber.style.borderColor = '#ef4444';
-        scoreNumber.style.color = '#ef4444';
-        scoreNumber.style.background = 'radial-gradient(circle, rgba(239, 68, 68, 0.2) 0%, transparent 70%)';
-        scoreTitle.innerText = "⚠️ 需重新鑑測";
-        scoreDesc.innerText = "您在真實演練中的決策容錯率偏低，這將為自身與團隊帶來高風險。請反覆練習本題庫。";
+        if (scoreNumber) {
+            scoreNumber.style.borderColor = '#ef4444';
+            scoreNumber.style.color = '#ef4444';
+        }
+        if (scoreTitle) scoreTitle.innerText = "⚠️ 需重新鑑測";
+        if (scoreDesc) scoreDesc.innerText = "決策容錯率偏低，請多加練習本題庫。";
     }
 
-    // 渲染本次作答解析面板
-    const reviewPanel = document.getElementById('answer-review-panel');
+    // 渲染解析面板
     const reviewList = document.getElementById('answer-review-list');
-    if (reviewPanel && reviewList) {
+    if (reviewList) {
         reviewList.innerHTML = answeredLog.map((log, i) => `
             <div class="review-item ${log.isCorrect ? 'review-correct' : 'review-wrong'}">
                 <div class="review-q-num">${log.isCorrect ? '✅' : '❌'} 第 ${i+1} 題</div>
@@ -392,5 +424,5 @@ function showScore() {
     }
 }
 
-// 系統啟動進入首題
+// 系統啟動
 initQuiz();
